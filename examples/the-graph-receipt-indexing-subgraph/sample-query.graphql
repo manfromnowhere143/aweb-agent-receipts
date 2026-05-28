@@ -1,0 +1,26 @@
+query ReceiptsRequiringHumanReview {
+  receipts(where: { requiresHumanReview: true }, first: 20, orderBy: indexedAtTimestamp, orderDirection: desc) {
+    id
+    scope
+    metadataURI
+    metadataHash
+    indexedAtBlock
+    redactionBoundary {
+      rawPromptIndexed
+      privatePayloadIndexed
+      redactedFields
+    }
+    recoveryState {
+      note
+    }
+  }
+}
+
+query PublicRedactionBoundaries {
+  redactionBoundaries(first: 20) {
+    id
+    receiptId
+    indexedFields
+    redactedFields
+  }
+}

@@ -1,0 +1,53 @@
+type Receipt @entity(immutable: true) {
+  id: ID!
+  receiptId: Bytes!
+  scope: String!
+  metadataURI: String!
+  metadataHash: Bytes!
+  requiresHumanReview: Boolean!
+  indexedAtBlock: BigInt!
+  indexedAtTimestamp: BigInt!
+  authority: AuthorityGrant
+  workflow: WorkflowRun
+  capability: CapabilityUse
+  redactionBoundary: RedactionBoundary
+  recoveryState: RecoveryState
+}
+
+type AuthorityGrant @entity(immutable: true) {
+  id: ID!
+  receiptId: Bytes!
+  mode: String!
+  publicMetadataOnly: Boolean!
+  deniedActions: [String!]!
+}
+
+type WorkflowRun @entity(immutable: true) {
+  id: ID!
+  receiptId: Bytes!
+  environment: String!
+  intentSummary: String!
+}
+
+type CapabilityUse @entity(immutable: true) {
+  id: ID!
+  receiptId: Bytes!
+  provider: String!
+  category: String!
+}
+
+type RedactionBoundary @entity(immutable: true) {
+  id: ID!
+  receiptId: Bytes!
+  rawPromptIndexed: Boolean!
+  privatePayloadIndexed: Boolean!
+  indexedFields: [String!]!
+  redactedFields: [String!]!
+}
+
+type RecoveryState @entity(immutable: true) {
+  id: ID!
+  receiptId: Bytes!
+  humanReviewRequired: Boolean!
+  note: String!
+}

@@ -31,6 +31,7 @@ An Aweb Agent Receipt captures:
 
 - `schema/aweb-agent-receipt.v0.1.schema.json` - compact JSON Schema for the example shape.
 - `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, DePIN, and indexing contexts.
+- `examples/the-graph-receipt-indexing-subgraph/` - minimal The Graph subgraph skeleton for indexing public receipt metadata.
 - `validate-examples.mjs` - local validator for required receipt fields and nested shape checks.
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
@@ -80,6 +81,10 @@ Expected result:
 - Oasis-style verifiable private execution evidence.
 - IoTeX/DePIN-style activity-review evidence.
 - The Graph-style receipt metadata indexing evidence.
+
+## Current Examples
+
+- `examples/the-graph-receipt-indexing-subgraph/` - a minimal subgraph skeleton that indexes public receipt metadata from a placeholder `ReceiptPublished` event while keeping raw prompts, secrets, counterparties, and private payloads outside the indexed graph.
 
 ## License
 

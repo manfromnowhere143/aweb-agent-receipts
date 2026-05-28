@@ -1,6 +1,6 @@
 {
   "name": "@aweb-labs/agent-receipts",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": false,
   "description": "Public reviewer corpus for Aweb Agent Receipts: schema, simulated fixtures, and validator.",
   "type": "module",
@@ -13,6 +13,7 @@
     "schema",
     "fixtures",
     "docs",
+    "examples",
     "validate-examples.mjs",
     "README.md",
     "LICENSE",

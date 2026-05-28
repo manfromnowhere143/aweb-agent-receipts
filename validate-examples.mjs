@@ -3,6 +3,7 @@ import path from "node:path";
 
 const root = new URL(".", import.meta.url);
 const fixturesDir = new URL("./fixtures/", root);
+const graphSubgraphDir = new URL("./examples/the-graph-receipt-indexing-subgraph/", root);
 
 const requiredTopLevel = [
   "receipt_version",
@@ -71,4 +72,62 @@ for (const file of files) {
   validated.push(path.join("fixtures", file));
 }
 
-console.log(JSON.stringify({ ok: true, count: validated.length, validated }, null, 2));
+const graphSubgraphFiles = [
+  "README.md",
+  "subgraph.yaml",
+  "schema.graphql",
+  "sample-query.graphql",
+  "abis/ReceiptRegistry.json",
+  "src/receipt-registry.ts",
+];
+
+for (const file of graphSubgraphFiles) {
+  const content = await readFile(new URL(file, graphSubgraphDir), "utf8");
+  assert(content.trim().length > 0, `examples/the-graph-receipt-indexing-subgraph/${file}: empty file`);
+}
+
+const graphSchema = await readFile(new URL("schema.graphql", graphSubgraphDir), "utf8");
+for (const typeName of [
+  "Receipt",
+  "AuthorityGrant",
+  "WorkflowRun",
+  "CapabilityUse",
+  "RedactionBoundary",
+  "RecoveryState",
+]) {
+  assert(
+    graphSchema.includes(`type ${typeName} @entity`),
+    `examples/the-graph-receipt-indexing-subgraph/schema.graphql: missing ${typeName} entity`,
+  );
+}
+
+const graphManifest = await readFile(new URL("subgraph.yaml", graphSubgraphDir), "utf8");
+for (const required of [
+  "ReceiptPublished",
+  "receipt-registry.ts",
+  "schema.graphql",
+  "ReceiptRegistry.json",
+]) {
+  assert(
+    graphManifest.includes(required),
+    `examples/the-graph-receipt-indexing-subgraph/subgraph.yaml: missing ${required}`,
+  );
+}
+
+const graphAbi = JSON.parse(await readFile(new URL("abis/ReceiptRegistry.json", graphSubgraphDir), "utf8"));
+assert(Array.isArray(graphAbi), "examples/the-graph-receipt-indexing-subgraph/abis/ReceiptRegistry.json: ABI must be an array");
+assert(
+  graphAbi.some((item) => item.type === "event" && item.name === "ReceiptPublished"),
+  "examples/the-graph-receipt-indexing-subgraph/abis/ReceiptRegistry.json: missing ReceiptPublished event",
+);
+
+console.log(JSON.stringify({
+  ok: true,
+  count: validated.length,
+  validated,
+  examples: {
+    the_graph_receipt_indexing_subgraph: graphSubgraphFiles.map((file) =>
+      path.join("examples", "the-graph-receipt-indexing-subgraph", file),
+    ),
+  },
+}, null, 2));
