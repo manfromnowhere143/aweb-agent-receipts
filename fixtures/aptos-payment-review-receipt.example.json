@@ -1,0 +1,114 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-aptos-001",
+  "example": true,
+  "created_at": "2026-05-28T20:12:00Z",
+  "scope": "aptos_payment_review",
+  "authority": {
+    "grant_id": "grant.aptos.payment_review.simulated.001",
+    "mode": "prepare",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "aptos_prepare_only.no_signature.no_broadcast.no_fund_movement",
+    "allowed_actions": [
+      "read_public_aptos_context",
+      "prepare_move_entry_function_review",
+      "record_gas_and_sponsor_policy",
+      "record_human_review_boundary"
+    ],
+    "denied_actions": [
+      "sign_transaction",
+      "submit_transaction",
+      "handle_private_keys",
+      "move_user_funds",
+      "sponsor_gas_without_policy",
+      "provide_investment_advice"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.aptos.payment_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.aptos.payment_receipt_demo",
+    "intent": "Prepare an Aptos payment or gas-sponsored action review without signing, broadcasting, custody, or fund movement.",
+    "environment": "simulated",
+    "network": "aptos-testnet-placeholder"
+  },
+  "capability": {
+    "provider": "aptos",
+    "tool": "aptos_transaction_review_adapter",
+    "category": "move_payment_evidence",
+    "mcp_provider": "simulated.aptos.move_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-28T20:12:02Z",
+    "finished_at": "2026-05-28T20:12:11Z",
+    "idempotency_key": "aptos-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated review only; no Aptos transaction was signed or submitted."
+    },
+    "simulation_result": "not_broadcast_prepare_only",
+    "failure_state": "recipient_account_and_payload_require_human_verification",
+    "recovery_state": "Operator must verify recipient, Move entry function, gas policy, and sponsorship constraints before any wallet signature."
+  },
+  "evidence": {
+    "summary": "The receipt records Aptos/Move payment-review context, gas and sponsorship policy, denied signing or broadcast, and the exact human-review boundary.",
+    "aptos_context": {
+      "chain": "aptos",
+      "network": "aptos-testnet-placeholder",
+      "move_package": "0xexample::aweb_agent_receipts",
+      "module": "payment_review",
+      "entry_function": "prepare_payment_intent",
+      "asset": "APT or registered fungible asset placeholder",
+      "gas_policy": "estimate_only_no_sponsorship_commitment",
+      "sponsored_transaction": false,
+      "sequence_number_policy": "not_read_from_private_account",
+      "signature_status": "not_requested",
+      "broadcast_status": "not_broadcast"
+    },
+    "artifacts": [
+      {
+        "type": "move_entry_function_reference",
+        "ref": "artifact://simulated/aptos/move-entry-function-001",
+        "redacted": false
+      },
+      {
+        "type": "prepared_payload_digest",
+        "ref": "sha256:aptos-placeholder-prepared-payload-digest",
+        "redacted": false
+      },
+      {
+        "type": "private_recipient_and_amount",
+        "ref": "redacted://aptos/payment-intent/private-fields",
+        "redacted": true,
+        "reason": "Recipient and amount are private until operator approval."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_move_context_private_payment_intent",
+    "redacted_fields": [
+      "raw_prompt",
+      "private_key",
+      "signer_account",
+      "recipient_account",
+      "payment_amount",
+      "private_payload",
+      "provider_credentials"
+    ],
+    "disclosure": "Move package/module/function and policy context are visible; private payment intent and signer fields are redacted."
+  },
+  "review": {
+    "trust_state": "prepare_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture demonstrates an Aptos-specific receipt shape for payment-adjacent or gas-sponsored agent workflows.",
+      "No transaction was signed, sponsored, submitted, or broadcast.",
+      "A funded milestone should replace placeholders with testnet-safe Aptos examples and validator checks."
+    ]
+  }
+}

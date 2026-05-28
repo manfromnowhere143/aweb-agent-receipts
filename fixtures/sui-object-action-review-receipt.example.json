@@ -1,0 +1,118 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-sui-001",
+  "example": true,
+  "created_at": "2026-05-28T20:18:00Z",
+  "scope": "sui_object_action_review",
+  "authority": {
+    "grant_id": "grant.sui.object_review.simulated.001",
+    "mode": "simulate",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "sui_simulate_only.no_signature.no_object_mutation.no_fund_movement",
+    "allowed_actions": [
+      "read_public_object_metadata",
+      "simulate_move_call",
+      "record_object_ownership_policy",
+      "record_gas_budget_estimate"
+    ],
+    "denied_actions": [
+      "sign_transaction",
+      "submit_mainnet_transaction",
+      "mutate_live_object",
+      "transfer_assets",
+      "publish_private_inputs",
+      "custody_keys"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.sui.object_action_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.sui.object_action_receipt_demo",
+    "intent": "Review a simulated Sui object-centric Move call and preserve authority, object access, gas, failure, and redaction boundaries.",
+    "environment": "simulated",
+    "network": "sui-testnet-placeholder"
+  },
+  "capability": {
+    "provider": "sui",
+    "tool": "sui_object_action_reviewer",
+    "category": "object_centric_execution_evidence",
+    "mcp_provider": "simulated.sui.object_reader"
+  },
+  "execution": {
+    "status": "simulated",
+    "started_at": "2026-05-28T20:18:02Z",
+    "finished_at": "2026-05-28T20:18:13Z",
+    "idempotency_key": "sui-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated object-action review only; no transaction was signed or submitted."
+    },
+    "simulation_result": "object_policy_review_prepared",
+    "failure_state": null,
+    "recovery_state": "Human review required before any object mutation, transaction signature, or broadcast."
+  },
+  "evidence": {
+    "summary": "The receipt captures Sui object access, Move call context, gas estimate policy, redacted private inputs, and the stop condition before any live object mutation.",
+    "sui_context": {
+      "chain": "sui",
+      "network": "sui-testnet-placeholder",
+      "package": "0xexample::aweb_agent_receipts",
+      "module": "object_review",
+      "function": "prepare_object_action",
+      "object_access": [
+        {
+          "object_id": "0xobject_placeholder",
+          "access": "read_metadata",
+          "mutated": false
+        }
+      ],
+      "programmable_transaction_block": "review_only_placeholder",
+      "gas_budget_policy": "estimate_only",
+      "signature_status": "not_requested",
+      "broadcast_status": "not_broadcast"
+    },
+    "artifacts": [
+      {
+        "type": "sui_object_reference",
+        "ref": "artifact://simulated/sui/object-reference-001",
+        "redacted": false
+      },
+      {
+        "type": "programmable_transaction_block_digest",
+        "ref": "sha256:sui-placeholder-ptb-digest",
+        "redacted": false
+      },
+      {
+        "type": "private_object_inputs",
+        "ref": "redacted://sui/object-action/private-inputs",
+        "redacted": true,
+        "reason": "Private object inputs and operator intent are not public reviewer data."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_object_context_private_inputs",
+    "redacted_fields": [
+      "raw_prompt",
+      "private_key",
+      "private_object_inputs",
+      "operator_intent",
+      "counterparty",
+      "provider_credentials"
+    ],
+    "disclosure": "Sui package/module/function, object-access class, and gas policy are visible; private inputs and signer data are redacted."
+  },
+  "review": {
+    "trust_state": "simulation_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture demonstrates a Sui-specific receipt shape around object-centric Move workflows.",
+      "No live Sui object was mutated, transferred, signed for, or submitted.",
+      "A funded milestone should replace placeholders with testnet-safe Sui examples and object-policy validation."
+    ]
+  }
+}

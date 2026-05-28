@@ -30,16 +30,18 @@ An Aweb Agent Receipt captures:
 ## Repository Layout
 
 - `schema/aweb-agent-receipt.v0.1.schema.json` - compact JSON Schema for the example shape.
-- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, Aave pool-risk, Solana action-review, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, DePIN, and indexing contexts.
+- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, Aptos/Move, Sui/object, MoveVM, HCS, Aave pool-risk, Solana action-review, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, DePIN, and indexing contexts.
 - `examples/the-graph-receipt-indexing-subgraph/` - minimal The Graph subgraph skeleton for indexing public receipt metadata.
 - `validate-examples.mjs` - local validator for required receipt fields and nested shape checks.
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
 - `docs/aave-agent-risk-receipts.md` - Aave pool-risk receipt boundary.
+- `docs/aptos-payment-agent-receipts.md` - Aptos payment-review receipt boundary.
 - `docs/solana-agent-action-receipts.md` - Solana action-review receipt boundary.
 - `docs/solana-foundation-developer-tooling-proposal.md` - Solana Foundation developer-tooling proposal packet.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
 - `docs/sonic-agent-payment-receipts.md` - Sonic payment-review receipt boundary.
 - `docs/stellar-payment-agent-receipts.md` - Stellar payment-review receipt boundary.
+- `docs/sui-object-agent-receipts.md` - Sui object-action receipt boundary.
 - `docs/tezos-etherlink-agent-receipts.md` - Tezos/Etherlink execution receipt boundary.
 - `docs/tether-qvac-wdk-agent-receipts.md` - Tether/QVAC/WDK local-agent receipt boundary.
 - `docs/tron-stablecoin-agent-receipts.md` - TRON stablecoin receipt boundary.
@@ -77,8 +79,10 @@ Expected result:
 - Aleo-style selective-disclosure/private execution evidence.
 - Zcash-style private-agent receipt with no raw log boundary.
 - Aave-style read-only pool-risk review evidence.
+- Aptos-style payment and gas-policy review evidence.
 - Solana-style simulate-only action-review evidence.
 - Stellar-style payment-review evidence.
+- Sui-style object-action and programmable transaction review evidence.
 - Morpho/Base-style read-only vault-risk classifier evidence.
 - Uniswap-style read-only route-review evidence.
 - Sonic-style read-only payment-context review evidence.
