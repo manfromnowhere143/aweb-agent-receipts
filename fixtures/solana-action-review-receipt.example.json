@@ -1,0 +1,108 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-solana-action-review-001",
+  "example": true,
+  "created_at": "2026-05-28T19:28:00Z",
+  "scope": "solana_action_review",
+  "authority": {
+    "grant_id": "grant.solana.action_review.simulated.001",
+    "mode": "simulate",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "simulate_only.no_signature.no_broadcast.no_fund_movement",
+    "allowed_actions": [
+      "read_public_program_context",
+      "prepare_transaction_simulation_summary",
+      "estimate_compute_and_fee_context",
+      "record_rpc_provider_boundary",
+      "prepare_reviewer_summary"
+    ],
+    "denied_actions": [
+      "sign_transaction",
+      "broadcast_transaction",
+      "move_user_funds",
+      "extract_private_key_or_seed",
+      "front_run_or_sandwich",
+      "spam_rpc_endpoints",
+      "issue_investment_advice"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.solana.action_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.solana.action_review_demo",
+    "intent": "Generate a simulated receipt for an agent-assisted Solana action review before any wallet signature or transaction broadcast exists.",
+    "environment": "simulated",
+    "network": "solana-devnet-placeholder"
+  },
+  "capability": {
+    "provider": "solana",
+    "tool": "action_context_simulator",
+    "category": "program_action_evidence",
+    "mcp_provider": "simulated.solana.rpc_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-28T19:28:02Z",
+    "finished_at": "2026-05-28T19:28:10Z",
+    "idempotency_key": "solana-action-review-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated receipt only; no wallet signature, transaction broadcast, priority-fee bidding, or fund movement."
+    },
+    "simulation_status": "prepared_not_signed_not_broadcast",
+    "recovery_state": "Requires verified program ID, RPC source, compute-budget estimate, wallet-owner approval, and human review before any transaction can be prepared for signature."
+  },
+  "evidence": {
+    "summary": "The receipt records simulated Solana action-review context and explicitly blocks signing, broadcasting, private-key handling, fund movement, and unsafe automation.",
+    "solana_context": {
+      "cluster": "devnet-placeholder",
+      "program_id": "not_deployed_yet",
+      "accounts": "redacted_or_placeholder",
+      "instruction_class": "review_only_placeholder",
+      "compute_units": "requires_live_simulation",
+      "priority_fee_policy": "not_authorized",
+      "rpc_source": "simulated",
+      "transaction_signature": null,
+      "broadcast": false
+    },
+    "artifacts": [
+      {
+        "type": "simulated_instruction_context",
+        "ref": "artifact://simulated/solana/action-context-001",
+        "redacted": true,
+        "reason": "Example uses placeholder account and instruction context."
+      },
+      {
+        "type": "policy_boundary",
+        "ref": "policy://simulate_only.no_signature.no_broadcast.no_fund_movement",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_method_private_wallets",
+    "redacted_fields": [
+      "raw_prompt",
+      "wallet_address",
+      "private_account_context",
+      "counterparty",
+      "provider_credentials",
+      "exact_user_intent",
+      "prepared_transaction_payload"
+    ],
+    "disclosure": "Simulation method, policy limits, and stop condition are visible; wallet, account, and prepared transaction details remain redacted."
+  },
+  "review": {
+    "trust_state": "simulated_not_executable",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is a public-good Solana developer-tooling example, not a wallet, token, trading, or custody product.",
+      "The agent is denied signing, broadcasting, private-key handling, fund movement, unsafe RPC behavior, and investment advice.",
+      "A funded milestone should connect verified Solana program/RPC simulation data while preserving the same no-custody and no-unsupervised-action boundary."
+    ]
+  }
+}

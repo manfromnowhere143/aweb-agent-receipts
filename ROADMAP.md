@@ -46,6 +46,7 @@ Potential adapters depend on grant and community feedback. Candidate tracks incl
 - cross-chain route/message receipts,
 - payment-preparation receipts,
 - MoveVM/action-simulation receipts,
+- Solana action-review and transaction-simulation receipts,
 - DeFi pool and risk-review receipts,
 - public-good receipt indexing,
 - permanent archive references.
