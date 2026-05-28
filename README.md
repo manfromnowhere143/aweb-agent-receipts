@@ -39,6 +39,7 @@ An Aweb Agent Receipt captures:
 - `docs/solana-foundation-developer-tooling-proposal.md` - Solana Foundation developer-tooling proposal packet.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
 - `docs/sonic-agent-payment-receipts.md` - Sonic payment-review receipt boundary.
+- `docs/stellar-payment-agent-receipts.md` - Stellar payment-review receipt boundary.
 - `docs/tezos-etherlink-agent-receipts.md` - Tezos/Etherlink execution receipt boundary.
 - `docs/tether-qvac-wdk-agent-receipts.md` - Tether/QVAC/WDK local-agent receipt boundary.
 - `docs/tron-stablecoin-agent-receipts.md` - TRON stablecoin receipt boundary.
@@ -77,6 +78,7 @@ Expected result:
 - Zcash-style private-agent receipt with no raw log boundary.
 - Aave-style read-only pool-risk review evidence.
 - Solana-style simulate-only action-review evidence.
+- Stellar-style payment-review evidence.
 - Morpho/Base-style read-only vault-risk classifier evidence.
 - Uniswap-style read-only route-review evidence.
 - Sonic-style read-only payment-context review evidence.

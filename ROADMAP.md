@@ -45,6 +45,7 @@ Potential adapters depend on grant and community feedback. Candidate tracks incl
 - privacy-preserving receipts,
 - cross-chain route/message receipts,
 - payment-preparation receipts,
+- Stellar payment and memo-policy receipts,
 - MoveVM/action-simulation receipts,
 - Solana action-review and transaction-simulation receipts,
 - DeFi pool and risk-review receipts,

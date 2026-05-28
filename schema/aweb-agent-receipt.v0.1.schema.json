@@ -51,6 +51,7 @@
         "tezos_etherlink_execution",
         "local_wallet_adjacent",
         "stablecoin_payment_review",
+        "stellar_payment_review",
         "verifiable_private_execution",
         "depin_activity_review",
         "graph_receipt_indexing",

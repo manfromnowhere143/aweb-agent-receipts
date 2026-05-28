@@ -1,0 +1,107 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-stellar-payment-review-001",
+  "example": true,
+  "created_at": "2026-05-28T19:58:00Z",
+  "scope": "stellar_payment_review",
+  "authority": {
+    "grant_id": "grant.stellar.payment_receipts.simulated.001",
+    "mode": "prepare",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "stellar_payment_review_only.no_signing.no_broadcast",
+    "allowed_actions": [
+      "prepare_payment_context_summary",
+      "record_asset_and_memo_policy",
+      "record_soroban_or_horizon_context",
+      "record_policy_and_recovery_state"
+    ],
+    "denied_actions": [
+      "sign_transaction",
+      "broadcast_transaction",
+      "move_user_funds",
+      "custody_secret_key",
+      "publish_counterparty",
+      "provide_investment_advice"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.stellar.payment_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.stellar.payment_receipt_demo",
+    "intent": "Prepare a Stellar payment-review receipt without signing, broadcasting, custody, or fund movement.",
+    "environment": "simulated",
+    "network": "stellar-testnet-placeholder"
+  },
+  "capability": {
+    "provider": "stellar",
+    "tool": "payment_context_preparer",
+    "category": "payment_and_stablecoin_evidence",
+    "mcp_provider": "simulated.stellar.payment_context_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-28T19:58:02Z",
+    "finished_at": "2026-05-28T19:58:09Z",
+    "idempotency_key": "stellar-payment-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "No signed or broadcast Stellar transaction."
+    },
+    "payment_status": "prepared_not_signed",
+    "recovery_state": "Requires explicit human approval and wallet signature outside this example."
+  },
+  "evidence": {
+    "summary": "The receipt captures Stellar payment-review context, asset class, memo policy, Soroban/Horizon context, destination redaction, and no-broadcast state.",
+    "stellar_context": {
+      "source_account": "redacted",
+      "destination_account": "redacted",
+      "asset_class": "stellar_asset_or_stablecoin_placeholder",
+      "amount_class": "policy_limited_placeholder",
+      "memo_policy": "redacted_or_hash_only",
+      "soroban_context": "optional_contract_context_placeholder",
+      "horizon_context": "optional_public_network_context_placeholder",
+      "transaction_hash": null,
+      "broadcast": false
+    },
+    "artifacts": [
+      {
+        "type": "stellar_payment_policy_check",
+        "ref": "artifact://simulated/stellar/payment-policy-001",
+        "redacted": false
+      },
+      {
+        "type": "private_payment_context",
+        "ref": "artifact://private/stellar/payment-context-001",
+        "redacted": true,
+        "reason": "Payment context may contain private account, memo, counterparty, and intent data."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "stellar_payment_counterparty_and_memo_redacted",
+    "redacted_fields": [
+      "raw_prompt",
+      "source_account",
+      "destination_account",
+      "memo",
+      "counterparty",
+      "private_payment_intent",
+      "provider_credentials",
+      "secret_key"
+    ],
+    "disclosure": "Policy status, asset class, and no-broadcast state are visible; account, memo, counterparty, and private intent details are redacted."
+  },
+  "review": {
+    "trust_state": "prepared_not_executed",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture avoids unsafe payment automation and yield/investment claims.",
+      "The agent prepared context only and did not sign, broadcast, custody, or move funds.",
+      "A funded milestone should add testnet-safe Stellar examples with explicit safety boundaries and self-contained documentation."
+    ]
+  }
+}
