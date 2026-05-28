@@ -1,0 +1,106 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-aave-pool-risk-001",
+  "example": true,
+  "created_at": "2026-05-28T18:25:00Z",
+  "scope": "aave_pool_risk_review",
+  "authority": {
+    "grant_id": "grant.aave.pool_risk_review.read_only.001",
+    "mode": "observe",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "read_only.no_supply.no_borrow.no_liquidation",
+    "allowed_actions": [
+      "read_public_pool_reserve_data",
+      "inspect_health_factor_policy_context",
+      "record_oracle_liquidity_evidence",
+      "prepare_reviewer_summary"
+    ],
+    "denied_actions": [
+      "supply_assets",
+      "borrow_assets",
+      "withdraw_collateral",
+      "repay_on_behalf",
+      "liquidate_position",
+      "sign_transaction",
+      "issue_investment_advice"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.defi.aave_pool_risk_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.aave.pool_risk_review_demo",
+    "intent": "Generate a read-only receipt for an agent-assisted Aave pool risk review before any user-facing position action is prepared.",
+    "environment": "mainnet_read_only",
+    "network": "aave-v3-ethereum-read-only-placeholder"
+  },
+  "capability": {
+    "provider": "aave",
+    "tool": "pool_reserve_context_reader",
+    "category": "defi_pool_risk_evidence",
+    "mcp_provider": "simulated.aave.pool_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-28T18:25:02Z",
+    "finished_at": "2026-05-28T18:25:13Z",
+    "idempotency_key": "aave-pool-risk-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Read-only example; no supply, borrow, withdrawal, repayment, liquidation, signature, or transaction."
+    },
+    "risk_result": "insufficient_evidence_do_not_prepare_position_change",
+    "recovery_state": "Require verified Aave reserve data, oracle context, liquidation policy, health-factor policy, and human approval before preparing any user-facing action."
+  },
+  "evidence": {
+    "summary": "The receipt records read-only Aave pool risk-review context and explicitly blocks capital movement, signing, liquidation, and recommendations.",
+    "pool_dimensions": {
+      "protocol_context": "aave_v3_placeholder",
+      "reserve_asset": "redacted_or_placeholder",
+      "liquidity_depth": "requires_live_verification",
+      "utilization": "requires_live_verification",
+      "oracle_dependency": "requires_verification",
+      "liquidation_threshold": "requires_policy_review",
+      "health_factor_policy": "not_approved",
+      "gho_context": "not_used_in_fixture",
+      "data_freshness": "fixture_not_live"
+    },
+    "artifacts": [
+      {
+        "type": "pool_reserve_context_snapshot",
+        "ref": "artifact://simulated/aave/pool-reserve-context-001",
+        "redacted": true,
+        "reason": "Example uses placeholder reserve context and no wallet-specific position data."
+      },
+      {
+        "type": "risk_policy",
+        "ref": "policy://read_only.no_supply.no_borrow.no_liquidation",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_method_private_wallets",
+    "redacted_fields": [
+      "raw_prompt",
+      "wallet_address",
+      "private_position",
+      "counterparty",
+      "provider_credentials",
+      "exact_user_intent"
+    ],
+    "disclosure": "Pool-review method, policy limits, and stop condition are visible; wallet, position, and exact user intent remain redacted."
+  },
+  "review": {
+    "trust_state": "read_only_incomplete_evidence",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is not investment advice and does not prepare or execute an Aave position action.",
+      "The agent is explicitly denied supply, borrow, withdrawal, repayment, liquidation, signing, and recommendation authority.",
+      "A production integration should connect verified Aave pool and oracle data sources while preserving the same no-custody, no-unsupervised-capital-movement boundary."
+    ]
+  }
+}

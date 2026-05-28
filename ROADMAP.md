@@ -46,10 +46,10 @@ Potential adapters depend on grant and community feedback. Candidate tracks incl
 - cross-chain route/message receipts,
 - payment-preparation receipts,
 - MoveVM/action-simulation receipts,
+- DeFi pool and risk-review receipts,
 - public-good receipt indexing,
 - permanent archive references.
 
 Every adapter should preserve the same safety boundary: no raw prompts, no secrets,
 no private payloads, no custody claims, and no unsafe automation details on public
 surfaces.
-

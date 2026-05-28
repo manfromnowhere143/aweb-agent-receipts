@@ -44,6 +44,7 @@
         "movevm_execution",
         "payment_preparation",
         "private_execution",
+        "aave_pool_risk_review",
         "vault_risk_review",
         "dex_route_review",
         "sonic_payment_review",

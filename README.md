@@ -30,10 +30,11 @@ An Aweb Agent Receipt captures:
 ## Repository Layout
 
 - `schema/aweb-agent-receipt.v0.1.schema.json` - compact JSON Schema for the example shape.
-- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, DePIN, and indexing contexts.
+- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, Aave pool-risk, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, DePIN, and indexing contexts.
 - `examples/the-graph-receipt-indexing-subgraph/` - minimal The Graph subgraph skeleton for indexing public receipt metadata.
 - `validate-examples.mjs` - local validator for required receipt fields and nested shape checks.
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
+- `docs/aave-agent-risk-receipts.md` - Aave pool-risk receipt boundary.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
 - `docs/sonic-agent-payment-receipts.md` - Sonic payment-review receipt boundary.
 - `docs/tezos-etherlink-agent-receipts.md` - Tezos/Etherlink execution receipt boundary.
@@ -72,6 +73,7 @@ Expected result:
 - XRPL-style payment-preparation evidence with no signing or broadcast.
 - Aleo-style selective-disclosure/private execution evidence.
 - Zcash-style private-agent receipt with no raw log boundary.
+- Aave-style read-only pool-risk review evidence.
 - Morpho/Base-style read-only vault-risk classifier evidence.
 - Uniswap-style read-only route-review evidence.
 - Sonic-style read-only payment-context review evidence.
