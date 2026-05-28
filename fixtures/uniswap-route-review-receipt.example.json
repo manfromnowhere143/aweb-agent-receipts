@@ -1,0 +1,101 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-uniswap-route-review-001",
+  "example": true,
+  "created_at": "2026-05-28T12:20:00Z",
+  "scope": "dex_route_review",
+  "authority": {
+    "grant_id": "grant.uniswap.route_review.read_only.001",
+    "mode": "observe",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "read_only.no_swap.no_liquidity_change",
+    "allowed_actions": [
+      "read_public_pool_metadata",
+      "inspect_route_quote_context",
+      "record_routing_risk_evidence"
+    ],
+    "denied_actions": [
+      "execute_swap",
+      "provide_liquidity",
+      "remove_liquidity",
+      "sign_transaction",
+      "issue_investment_advice"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.defi.route_risk_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.uniswap.route_review_demo",
+    "intent": "Generate a read-only receipt for an agent-assisted Uniswap route review before any transaction is prepared.",
+    "environment": "mainnet_read_only",
+    "network": "unichain-or-ethereum-mainnet-read-only-placeholder"
+  },
+  "capability": {
+    "provider": "uniswap",
+    "tool": "route_context_reader",
+    "category": "dex_routing_evidence",
+    "mcp_provider": "simulated.uniswap.route_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-28T12:20:02Z",
+    "finished_at": "2026-05-28T12:20:10Z",
+    "idempotency_key": "uniswap-route-review-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Read-only example; no swap or liquidity transaction."
+    },
+    "route_result": "insufficient_evidence_do_not_prepare_transaction",
+    "recovery_state": "Require verified quote source, pool context, slippage policy, and human approval before preparing any transaction."
+  },
+  "evidence": {
+    "summary": "The receipt records route-review context and explicitly blocks swaps, liquidity changes, signing, and recommendations.",
+    "route_dimensions": {
+      "chain_context": "placeholder_unichain_or_ethereum",
+      "quote_source": "simulated_fixture",
+      "pool_liquidity": "requires_live_verification",
+      "slippage_policy": "not_approved",
+      "price_impact": "requires_live_verification",
+      "token_allowlist": "requires_policy_review",
+      "hook_or_extension_context": "not_used_in_fixture"
+    },
+    "artifacts": [
+      {
+        "type": "route_context_snapshot",
+        "ref": "artifact://simulated/uniswap/route-context-001",
+        "redacted": true,
+        "reason": "Example uses placeholder route context and no wallet-specific data."
+      },
+      {
+        "type": "risk_policy",
+        "ref": "policy://read_only.no_swap.no_liquidity_change",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_method_private_wallets",
+    "redacted_fields": [
+      "raw_prompt",
+      "wallet_address",
+      "counterparty",
+      "private_portfolio",
+      "provider_credentials",
+      "exact_trade_intent"
+    ],
+    "disclosure": "Route-review method, policy limits, and failure state are visible; wallet/user intent and private portfolio context stay redacted."
+  },
+  "review": {
+    "trust_state": "read_only_incomplete_evidence",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is not investment advice and does not execute a swap.",
+      "The agent is explicitly denied swap, liquidity, signing, and recommendation authority.",
+      "A production integration should connect verified Uniswap or Unichain data sources while preserving the same receipt and redaction boundary."
+    ]
+  }
+}

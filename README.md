@@ -30,9 +30,10 @@ An Aweb Agent Receipt captures:
 ## Repository Layout
 
 - `schema/aweb-agent-receipt.v0.1.schema.json` - compact JSON Schema for the example shape.
-- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, and DeFi-risk contexts.
+- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, DeFi-risk, and DEX route-review contexts.
 - `validate-examples.mjs` - local validator for required receipt fields and nested shape checks.
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
+- `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
 - `docs/grant-context.md` - how this package supports the Aweb public-good grant track.
 
 ## Validate
@@ -64,8 +65,8 @@ Expected result:
 - Aleo-style selective-disclosure/private execution evidence.
 - Zcash-style private-agent receipt with no raw log boundary.
 - Morpho/Base-style read-only vault-risk classifier evidence.
+- Uniswap-style read-only route-review evidence.
 
 ## License
 
 Apache-2.0.
-

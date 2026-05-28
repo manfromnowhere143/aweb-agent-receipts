@@ -45,6 +45,7 @@
         "payment_preparation",
         "private_execution",
         "vault_risk_review",
+        "dex_route_review",
         "durable_workflow",
         "smart_account"
       ]
