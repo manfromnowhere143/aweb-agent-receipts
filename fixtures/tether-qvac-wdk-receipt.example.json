@@ -1,0 +1,99 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-tether-qvac-wdk-001",
+  "example": true,
+  "created_at": "2026-05-28T14:30:00Z",
+  "scope": "local_wallet_adjacent",
+  "authority": {
+    "grant_id": "grant.tether.qvac_wdk.local_receipts.simulated.001",
+    "mode": "simulate",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "local_first.no_custody.no_wallet_action",
+    "allowed_actions": [
+      "classify_local_agent_action",
+      "record_wallet_adjacent_policy_state",
+      "prepare_redacted_receipt"
+    ],
+    "denied_actions": [
+      "sign_transaction",
+      "broadcast_transaction",
+      "custody_user_funds",
+      "publish_raw_prompt",
+      "publish_private_wallet_context"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.local_agent.receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.tether.qvac_wdk_local_receipt_demo",
+    "intent": "Demonstrate a local-first receipt boundary for wallet-adjacent agent workflows without custody or signing.",
+    "environment": "simulated",
+    "runtime_context": "local_agent_or_peer_to_peer_placeholder"
+  },
+  "capability": {
+    "provider": "tether-dev",
+    "tool": "local_wallet_adjacent_context_classifier",
+    "category": "local_first_execution_evidence",
+    "mcp_provider": "simulated.tether.local_receipt_context"
+  },
+  "execution": {
+    "status": "simulated",
+    "started_at": "2026-05-28T14:30:02Z",
+    "finished_at": "2026-05-28T14:30:08Z",
+    "idempotency_key": "tether-qvac-wdk-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USDt",
+      "note": "No live wallet, payment, or QVAC/WDK execution."
+    },
+    "wallet_action_status": "not_requested",
+    "recovery_state": "Human review required before any wallet action, transaction preparation, or network publication."
+  },
+  "evidence": {
+    "summary": "The receipt records local-agent and wallet-adjacent execution evidence while keeping prompts, wallet context, secrets, and unsafe automation details private.",
+    "local_context": {
+      "runtime": "local_or_p2p_placeholder",
+      "wallet_action_reference": null,
+      "transaction_hash": null,
+      "private_payload_policy": "redacted",
+      "publication_mode": "local_or_digest_only"
+    },
+    "artifacts": [
+      {
+        "type": "local_policy_summary",
+        "ref": "policy://local_first.no_custody.no_wallet_action",
+        "redacted": false
+      },
+      {
+        "type": "private_local_execution_context",
+        "ref": "artifact://private/tether/local-agent-context-001",
+        "redacted": true,
+        "reason": "Local prompts, wallet context, and private payloads should not become public logs."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "local_first_digest_or_redacted_summary",
+    "redacted_fields": [
+      "raw_prompt",
+      "wallet_address",
+      "private_wallet_context",
+      "secret_payload",
+      "operator_private_notes",
+      "provider_credentials"
+    ],
+    "disclosure": "Reviewer sees authority, local-first policy, no-wallet-action status, cost, and recovery state only."
+  },
+  "review": {
+    "trust_state": "local_fixture_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture does not claim live Tether.dev, QVAC, WDK, Pear, wallet, or payment execution.",
+      "The agent is explicitly denied signing, broadcasting, custody, and raw-log publication authority.",
+      "A funded milestone should produce testable local-first examples while preserving this privacy boundary."
+    ]
+  }
+}

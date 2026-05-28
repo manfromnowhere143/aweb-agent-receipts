@@ -48,6 +48,10 @@
         "dex_route_review",
         "sonic_payment_review",
         "tezos_etherlink_execution",
+        "local_wallet_adjacent",
+        "stablecoin_payment_review",
+        "verifiable_private_execution",
+        "depin_activity_review",
         "durable_workflow",
         "smart_account"
       ]

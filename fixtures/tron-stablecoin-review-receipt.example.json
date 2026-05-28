@@ -1,0 +1,101 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-tron-stablecoin-review-001",
+  "example": true,
+  "created_at": "2026-05-28T14:32:00Z",
+  "scope": "stablecoin_payment_review",
+  "authority": {
+    "grant_id": "grant.tron.stablecoin_receipts.simulated.001",
+    "mode": "prepare",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "stablecoin_review_only.no_transfer.no_custody",
+    "allowed_actions": [
+      "prepare_payment_context_summary",
+      "estimate_network_fee_class",
+      "record_policy_and_recovery_state"
+    ],
+    "denied_actions": [
+      "transfer_stablecoins",
+      "sign_transaction",
+      "broadcast_transaction",
+      "custody_user_funds",
+      "publish_counterparty"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.stablecoin.tron_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.tron.stablecoin_receipt_demo",
+    "intent": "Prepare a stablecoin payment-review receipt without signing, broadcasting, or moving funds.",
+    "environment": "simulated",
+    "network": "tron-or-bttc-placeholder"
+  },
+  "capability": {
+    "provider": "tron",
+    "tool": "stablecoin_context_preparer",
+    "category": "stablecoin_payment_evidence",
+    "mcp_provider": "simulated.tron.stablecoin_context_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-28T14:32:02Z",
+    "finished_at": "2026-05-28T14:32:10Z",
+    "idempotency_key": "tron-stablecoin-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "No signed or broadcast TRON/BTTC transaction."
+    },
+    "payment_status": "prepared_not_signed",
+    "recovery_state": "Requires explicit human approval and wallet signature outside this example."
+  },
+  "evidence": {
+    "summary": "The receipt captures stablecoin-review context, fee class, policy checks, destination redaction, and no-broadcast state.",
+    "stablecoin_context": {
+      "source_account": "redacted",
+      "destination_account": "redacted",
+      "asset_class": "stablecoin-placeholder",
+      "amount_class": "policy_limited_placeholder",
+      "fee_class": "requires_live_verification",
+      "transaction_hash": null,
+      "broadcast": false
+    },
+    "artifacts": [
+      {
+        "type": "stablecoin_policy_check",
+        "ref": "artifact://simulated/tron/stablecoin-policy-001",
+        "redacted": false
+      },
+      {
+        "type": "private_payment_context",
+        "ref": "artifact://private/tron/payment-context-001",
+        "redacted": true,
+        "reason": "Payment context may contain private account, counterparty, and intent data."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "stablecoin_counterparty_redacted",
+    "redacted_fields": [
+      "raw_prompt",
+      "source_account",
+      "destination_account",
+      "counterparty",
+      "private_payment_intent",
+      "provider_credentials"
+    ],
+    "disclosure": "Policy status and no-broadcast state are visible; account and counterparty details are redacted."
+  },
+  "review": {
+    "trust_state": "prepared_not_executed",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture avoids unsafe payment-automation claims.",
+      "The agent prepared context only and did not sign, broadcast, custody, or move stablecoins.",
+      "A funded milestone should add testnet-safe TRON/BTTC examples with explicit safety boundaries."
+    ]
+  }
+}

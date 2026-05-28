@@ -30,12 +30,16 @@ An Aweb Agent Receipt captures:
 ## Repository Layout
 
 - `schema/aweb-agent-receipt.v0.1.schema.json` - compact JSON Schema for the example shape.
-- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, DeFi-risk, DEX route-review, Sonic payment-review, and Tezos/Etherlink contexts.
+- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, and DePIN contexts.
 - `validate-examples.mjs` - local validator for required receipt fields and nested shape checks.
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
 - `docs/sonic-agent-payment-receipts.md` - Sonic payment-review receipt boundary.
 - `docs/tezos-etherlink-agent-receipts.md` - Tezos/Etherlink execution receipt boundary.
+- `docs/tether-qvac-wdk-agent-receipts.md` - Tether/QVAC/WDK local-agent receipt boundary.
+- `docs/tron-stablecoin-agent-receipts.md` - TRON stablecoin receipt boundary.
+- `docs/oasis-verifiable-private-agent-receipts.md` - Oasis private/verifiable receipt boundary.
+- `docs/iotex-depin-agent-receipts.md` - IoTeX/DePIN activity receipt boundary.
 - `docs/grant-context.md` - how this package supports the Aweb public-good grant track.
 
 ## Validate
@@ -70,6 +74,10 @@ Expected result:
 - Uniswap-style read-only route-review evidence.
 - Sonic-style read-only payment-context review evidence.
 - Tezos/Etherlink-style simulated execution review evidence.
+- Tether/QVAC/WDK-style local wallet-adjacent receipt evidence.
+- TRON-style stablecoin payment-review evidence.
+- Oasis-style verifiable private execution evidence.
+- IoTeX/DePIN-style activity-review evidence.
 
 ## License
 

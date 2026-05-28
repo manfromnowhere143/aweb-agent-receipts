@@ -1,0 +1,99 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-iotex-depin-activity-001",
+  "example": true,
+  "created_at": "2026-05-28T14:36:00Z",
+  "scope": "depin_activity_review",
+  "authority": {
+    "grant_id": "grant.iotex.depin_receipts.simulated.001",
+    "mode": "observe",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "depin_activity_review.no_device_control.no_private_location",
+    "allowed_actions": [
+      "read_public_device_or_activity_metadata",
+      "classify_verifiable_activity_evidence",
+      "record_redaction_and_recovery_state"
+    ],
+    "denied_actions": [
+      "control_device",
+      "publish_private_location",
+      "publish_device_owner_identity",
+      "submit_mainnet_transaction_without_approval"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.depin.iotex_activity_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.iotex.depin_activity_receipt_demo",
+    "intent": "Represent how a DePIN agent workflow can preserve verifiable activity evidence without exposing private device/user context.",
+    "environment": "simulated",
+    "network": "iotex-or-w3bstream-placeholder"
+  },
+  "capability": {
+    "provider": "iotex",
+    "tool": "depin_activity_context_reader",
+    "category": "depin_activity_evidence",
+    "mcp_provider": "simulated.iotex.depin_activity_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-28T14:36:02Z",
+    "finished_at": "2026-05-28T14:36:11Z",
+    "idempotency_key": "iotex-depin-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated DePIN activity review; no device control or live transaction."
+    },
+    "activity_result": "insufficient_verified_source_do_not_publish",
+    "recovery_state": "Require verified activity source, privacy review, and human approval before public publication."
+  },
+  "evidence": {
+    "summary": "The receipt records DePIN activity-review context and explicitly blocks device control, private location disclosure, and owner identity publication.",
+    "depin_context": {
+      "device_or_activity_id": "redacted_or_placeholder",
+      "activity_type": "simulated_sensor_or_service_event",
+      "location_precision": "redacted",
+      "owner_identity": "redacted",
+      "verification_reference": "sha256:example-iotex-activity-digest-001",
+      "device_control": false
+    },
+    "artifacts": [
+      {
+        "type": "activity_digest",
+        "ref": "sha256:example-iotex-activity-digest-001",
+        "redacted": false
+      },
+      {
+        "type": "private_device_context",
+        "ref": "artifact://private/iotex/device-context-001",
+        "redacted": true,
+        "reason": "Device owner, precise location, and private activity data should not be public by default."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "depin_public_digest_private_device_context",
+    "redacted_fields": [
+      "raw_prompt",
+      "device_owner_identity",
+      "precise_location",
+      "private_activity_payload",
+      "device_credentials",
+      "provider_credentials"
+    ],
+    "disclosure": "Reviewer sees activity class, digest reference, policy status, failure, and recovery state; private device context stays redacted."
+  },
+  "review": {
+    "trust_state": "depin_fixture_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture does not claim live IoTeX, W3bstream, or device-network execution.",
+      "The agent is explicitly denied device control and private-location publication authority.",
+      "A funded milestone should replace placeholders with IoTeX/DePIN-safe examples and preserve the privacy boundary."
+    ]
+  }
+}

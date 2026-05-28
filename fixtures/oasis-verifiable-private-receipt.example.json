@@ -1,0 +1,103 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-oasis-verifiable-private-001",
+  "example": true,
+  "created_at": "2026-05-28T14:34:00Z",
+  "scope": "verifiable_private_execution",
+  "authority": {
+    "grant_id": "grant.oasis.verifiable_private_receipts.simulated.001",
+    "mode": "simulate",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "private_data.verifiable_execution.digest_only",
+    "allowed_actions": [
+      "classify_private_data_boundary",
+      "prepare_verifiable_execution_summary",
+      "record_programmable_policy_state"
+    ],
+    "denied_actions": [
+      "publish_private_payload",
+      "publish_raw_prompt",
+      "publish_secret",
+      "submit_mainnet_transaction",
+      "claim_live_confidential_execution"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.privacy.oasis_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.oasis.verifiable_private_receipt_demo",
+    "intent": "Show how agent execution evidence can preserve private-data and programmable-policy boundaries with digest-grade public references.",
+    "environment": "simulated",
+    "privacy_goal": "private-by-default execution evidence with reviewer-visible policy state"
+  },
+  "capability": {
+    "provider": "oasis",
+    "tool": "verifiable_private_context_classifier",
+    "category": "private_verifiable_execution_evidence",
+    "mcp_provider": "simulated.oasis.private_context_reader"
+  },
+  "execution": {
+    "status": "simulated",
+    "started_at": "2026-05-28T14:34:02Z",
+    "finished_at": "2026-05-28T14:34:09Z",
+    "idempotency_key": "oasis-verifiable-private-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "No live Oasis confidential execution or transaction."
+    },
+    "policy_checks": {
+      "private_payload_publication": "blocked",
+      "raw_prompt_publication": "blocked",
+      "digest_reference": "prepared_placeholder",
+      "programmable_policy_state": "recorded_for_review"
+    },
+    "recovery_state": "A human reviewer can inspect the policy state and request private context only through an approved channel."
+  },
+  "evidence": {
+    "summary": "The receipt exposes policy and digest-grade evidence while keeping private data, prompts, and secrets out of public records.",
+    "oasis_context": {
+      "private_data_boundary": "redacted",
+      "verifiable_execution_reference": "sha256:example-oasis-policy-digest-001",
+      "programmable_policy": "review_required_before_publication",
+      "mainnet_action": false
+    },
+    "artifacts": [
+      {
+        "type": "policy_digest",
+        "ref": "sha256:example-oasis-policy-digest-001",
+        "redacted": false
+      },
+      {
+        "type": "private_execution_context",
+        "ref": "artifact://private/oasis/execution-context-001",
+        "redacted": true,
+        "reason": "Private execution context is intentionally excluded from reviewer-facing records."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "private_by_default_digest_reference",
+    "redacted_fields": [
+      "raw_prompt",
+      "private_payload",
+      "secret",
+      "counterparty",
+      "private_tool_args",
+      "provider_credentials"
+    ],
+    "disclosure": "Reviewer sees scoped authority, policy state, digest reference, no-mainnet-action boundary, and recovery state."
+  },
+  "review": {
+    "trust_state": "privacy_fixture_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture does not claim live Oasis or Sapphire execution.",
+      "It demonstrates a private/verifiable receipt boundary for future Oasis-aware examples.",
+      "A funded milestone should replace placeholders with testnet-safe privacy/verifiability examples."
+    ]
+  }
+}
