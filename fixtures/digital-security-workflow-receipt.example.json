@@ -1,0 +1,107 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-digital-security-workflow-001",
+  "example": true,
+  "created_at": "2026-05-29T01:19:00Z",
+  "scope": "digital_security_workflow_review",
+  "authority": {
+    "grant_id": "grant.digital_security.agent_receipts.simulated.001",
+    "mode": "observe",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "digital_security_review_only.no_sensitive_user_data.no_offensive_automation",
+    "allowed_actions": [
+      "summarize_public_safe_research_context",
+      "record_source_boundary",
+      "record_tool_query_summary",
+      "record_redaction_boundary",
+      "record_failure_and_recovery_state"
+    ],
+    "denied_actions": [
+      "collect_sensitive_user_data",
+      "store_raw_source_material",
+      "publish_private_identity",
+      "perform_intrusion",
+      "run_offensive_automation",
+      "bypass_access_controls",
+      "exfiltrate_data",
+      "contact_at_risk_persons"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.digital_security.workflow_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.digital_security.research_triage_demo",
+    "intent": "Record a safe simulated receipt for AI-assisted digital-security research triage without sensitive-user data or unsafe automation.",
+    "environment": "simulated",
+    "risk_context": "internet_freedom_and_civil_society_support_placeholder"
+  },
+  "capability": {
+    "provider": "public_safe_research_tools",
+    "tool": "source_boundary_summarizer",
+    "category": "digital_security_and_internet_freedom_evidence",
+    "mcp_provider": "simulated.public_safe.research_context_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-29T01:19:02Z",
+    "finished_at": "2026-05-29T01:19:11Z",
+    "idempotency_key": "digital-security-workflow-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated public-safe workflow; no sensitive-user data processed."
+    },
+    "safety_result": "safe_summary_only",
+    "recovery_state": "Requires human review before any outreach, publication, escalation, or operational recommendation."
+  },
+  "evidence": {
+    "summary": "The receipt records a simulated digital-security research workflow with explicit source, identity, raw-prompt, credential, and unsafe-automation redaction boundaries.",
+    "digital_security_context": {
+      "source_class": "public_safe_placeholder",
+      "sensitive_user_data_processed": false,
+      "offensive_capability_used": false,
+      "publication_ready": false,
+      "human_review_required_before_escalation": true
+    },
+    "artifacts": [
+      {
+        "type": "public_safe_research_summary",
+        "ref": "artifact://simulated/digital-security/public-summary-001",
+        "redacted": false
+      },
+      {
+        "type": "sensitive_context_boundary",
+        "ref": "artifact://private/digital-security/source-boundary-001",
+        "redacted": true,
+        "reason": "High-risk digital-security workflows can expose sources, identities, locations, credentials, and operational details."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "internet_freedom_sensitive_context_redacted",
+    "redacted_fields": [
+      "raw_prompt",
+      "source_identity",
+      "location",
+      "contact_details",
+      "private_notes",
+      "credentials",
+      "provider_payload",
+      "unpublished_findings",
+      "operational_details"
+    ],
+    "disclosure": "Only public-safe workflow class, policy state, and no-unsafe-automation status are visible; sensitive identities and operational details are redacted."
+  },
+  "review": {
+    "trust_state": "review_required_before_action",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is a simulated safety-boundary example for internet-freedom and digital-security workflows.",
+      "It does not process real sensitive-user data and does not perform offensive automation.",
+      "A real deployment should be reviewed with digital-security practitioners before being used in high-risk environments."
+    ]
+  }
+}

@@ -47,6 +47,8 @@ Potential adapters depend on grant and community feedback. Candidate tracks incl
 - payment-preparation receipts,
 - Aptos payment and gas-policy receipts,
 - Stellar payment and memo-policy receipts,
+- Bitcoin/Lightning invoice and payment-review receipts,
+- digital-security and internet-freedom workflow receipts,
 - Sui object-action and programmable transaction receipts,
 - MoveVM/action-simulation receipts,
 - Solana action-review and transaction-simulation receipts,

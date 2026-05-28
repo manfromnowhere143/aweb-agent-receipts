@@ -1,0 +1,111 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-bitcoin-lightning-payment-review-001",
+  "example": true,
+  "created_at": "2026-05-29T01:18:00Z",
+  "scope": "bitcoin_lightning_payment_review",
+  "authority": {
+    "grant_id": "grant.bitcoin.lightning.payment_review.simulated.001",
+    "mode": "prepare",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "bitcoin_lightning_review_only.no_signing.no_broadcast.no_custody",
+    "allowed_actions": [
+      "read_invoice_metadata_summary",
+      "record_payment_policy_result",
+      "record_redaction_boundary",
+      "record_human_review_requirement"
+    ],
+    "denied_actions": [
+      "sign_transaction",
+      "broadcast_transaction",
+      "pay_invoice",
+      "custody_private_key",
+      "store_seed_phrase",
+      "automate_funds_movement",
+      "publish_counterparty",
+      "provide_investment_advice"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.bitcoin.lightning_payment_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.bitcoin.lightning.payment_review_demo",
+    "intent": "Prepare a Bitcoin/Lightning payment-review receipt without signing, paying, broadcasting, custody, or private-key access.",
+    "environment": "simulated",
+    "network": "bitcoin-lightning-placeholder"
+  },
+  "capability": {
+    "provider": "bitcoin_lightning",
+    "tool": "invoice_context_preparer",
+    "category": "payment_review_and_freedom_tech_evidence",
+    "mcp_provider": "simulated.bitcoin.lightning_invoice_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-29T01:18:02Z",
+    "finished_at": "2026-05-29T01:18:08Z",
+    "idempotency_key": "bitcoin-lightning-payment-review-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated review only; no invoice paid, no transaction signed, no broadcast."
+    },
+    "payment_status": "reviewed_not_paid",
+    "recovery_state": "Requires explicit human review and wallet-side confirmation outside this example."
+  },
+  "evidence": {
+    "summary": "The receipt captures Bitcoin/Lightning payment-review context, invoice policy status, no-custody boundary, redacted counterparty metadata, and human-review requirement.",
+    "bitcoin_lightning_context": {
+      "invoice_hash": "redacted_or_placeholder",
+      "amount_class": "policy_limited_placeholder",
+      "expiry_state": "validity_not_verified_in_fixture",
+      "destination_node": "redacted",
+      "memo_or_description": "redacted",
+      "payment_preimage": null,
+      "paid": false,
+      "broadcast": false
+    },
+    "artifacts": [
+      {
+        "type": "invoice_policy_check",
+        "ref": "artifact://simulated/bitcoin-lightning/invoice-policy-001",
+        "redacted": false
+      },
+      {
+        "type": "private_invoice_context",
+        "ref": "artifact://private/bitcoin-lightning/invoice-context-001",
+        "redacted": true,
+        "reason": "Invoice context may expose counterparty, memo, routing, amount, and private operational intent."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "bitcoin_lightning_counterparty_invoice_and_key_material_redacted",
+    "redacted_fields": [
+      "raw_prompt",
+      "invoice",
+      "destination_node",
+      "counterparty",
+      "memo",
+      "description",
+      "amount",
+      "wallet_identifier",
+      "provider_credentials",
+      "private_key",
+      "seed_phrase"
+    ],
+    "disclosure": "Policy status and no-payment state are visible; invoice, counterparty, memo, wallet, and key material are redacted."
+  },
+  "review": {
+    "trust_state": "prepared_not_executed",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is for review-only Bitcoin/Lightning workflows.",
+      "The agent did not sign, broadcast, custody keys, store seed phrases, or pay an invoice.",
+      "A production implementation should keep signing and payment approval outside the agent and inside a user-controlled wallet boundary."
+    ]
+  }
+}

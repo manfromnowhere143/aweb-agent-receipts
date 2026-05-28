@@ -30,13 +30,15 @@ An Aweb Agent Receipt captures:
 ## Repository Layout
 
 - `schema/aweb-agent-receipt.v0.1.schema.json` - compact JSON Schema for the example shape.
-- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, Aptos/Move, Sui/object, MoveVM, HCS, Aave pool-risk, Solana action-review, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, DePIN, and indexing contexts.
+- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, Bitcoin/Lightning, digital-security, Aptos/Move, Sui/object, MoveVM, HCS, Aave pool-risk, Solana action-review, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, DePIN, and indexing contexts.
 - `examples/the-graph-receipt-indexing-subgraph/` - minimal The Graph subgraph skeleton for indexing public receipt metadata.
 - `validate-examples.mjs` - local validator for required receipt fields and nested shape checks.
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
 - `docs/aave-agent-risk-receipts.md` - Aave pool-risk receipt boundary.
 - `docs/aptos-payment-agent-receipts.md` - Aptos payment-review receipt boundary.
 - `docs/base-morpho-vault-risk-agent-receipts.md` - Base/Morpho vault-risk receipt boundary.
+- `docs/bitcoin-lightning-agent-receipts.md` - Bitcoin/Lightning payment-review receipt boundary.
+- `docs/digital-security-agent-receipts.md` - digital-security and internet-freedom workflow receipt boundary.
 - `docs/solana-agent-action-receipts.md` - Solana action-review receipt boundary.
 - `docs/solana-foundation-developer-tooling-proposal.md` - Solana Foundation developer-tooling proposal packet.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
@@ -83,6 +85,8 @@ Expected result:
 - Aptos-style payment and gas-policy review evidence.
 - Solana-style simulate-only action-review evidence.
 - Stellar-style payment-review evidence.
+- Bitcoin/Lightning-style invoice and payment-review evidence with no signing, payment, broadcast, or custody.
+- Digital-security workflow evidence with no sensitive-user data, offensive automation, or unsafe publication.
 - Sui-style object-action and programmable transaction review evidence.
 - Base/Morpho-style read-only vault-risk classifier evidence.
 - Uniswap-style read-only route-review evidence.
