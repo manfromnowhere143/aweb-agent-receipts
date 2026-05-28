@@ -36,6 +36,7 @@ An Aweb Agent Receipt captures:
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
 - `docs/aave-agent-risk-receipts.md` - Aave pool-risk receipt boundary.
 - `docs/aptos-payment-agent-receipts.md` - Aptos payment-review receipt boundary.
+- `docs/base-morpho-vault-risk-agent-receipts.md` - Base/Morpho vault-risk receipt boundary.
 - `docs/solana-agent-action-receipts.md` - Solana action-review receipt boundary.
 - `docs/solana-foundation-developer-tooling-proposal.md` - Solana Foundation developer-tooling proposal packet.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
@@ -83,7 +84,7 @@ Expected result:
 - Solana-style simulate-only action-review evidence.
 - Stellar-style payment-review evidence.
 - Sui-style object-action and programmable transaction review evidence.
-- Morpho/Base-style read-only vault-risk classifier evidence.
+- Base/Morpho-style read-only vault-risk classifier evidence.
 - Uniswap-style read-only route-review evidence.
 - Sonic-style read-only payment-context review evidence.
 - Tezos/Etherlink-style simulated execution review evidence.

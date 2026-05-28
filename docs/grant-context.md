@@ -21,3 +21,6 @@ The intended grant-funded path is to turn these examples into a maintained packa
 viewer that builders can reuse across agent frameworks, MCP/API tools, cloud workflows,
 and chain-adjacent developer tooling.
 
+The Base/Morpho example is a narrow DeFi-risk proof: it records an observe-only vault
+review, keeps deposits and recommendations denied, and documents why any Base funding
+route should wait for a small public demo or shipped prototype before claiming impact.
