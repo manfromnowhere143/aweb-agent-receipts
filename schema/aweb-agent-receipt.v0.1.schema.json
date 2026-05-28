@@ -52,6 +52,7 @@
         "stablecoin_payment_review",
         "verifiable_private_execution",
         "depin_activity_review",
+        "graph_receipt_indexing",
         "durable_workflow",
         "smart_account"
       ]

@@ -30,7 +30,7 @@ An Aweb Agent Receipt captures:
 ## Repository Layout
 
 - `schema/aweb-agent-receipt.v0.1.schema.json` - compact JSON Schema for the example shape.
-- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, and DePIN contexts.
+- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, DeFi-risk, DEX route-review, Sonic payment-review, Tezos/Etherlink, local wallet-adjacent, stablecoin, verifiable-private, DePIN, and indexing contexts.
 - `validate-examples.mjs` - local validator for required receipt fields and nested shape checks.
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
@@ -40,6 +40,7 @@ An Aweb Agent Receipt captures:
 - `docs/tron-stablecoin-agent-receipts.md` - TRON stablecoin receipt boundary.
 - `docs/oasis-verifiable-private-agent-receipts.md` - Oasis private/verifiable receipt boundary.
 - `docs/iotex-depin-agent-receipts.md` - IoTeX/DePIN activity receipt boundary.
+- `docs/the-graph-agent-receipt-indexing.md` - The Graph metadata indexing receipt boundary.
 - `docs/grant-context.md` - how this package supports the Aweb public-good grant track.
 
 ## Validate
@@ -78,6 +79,7 @@ Expected result:
 - TRON-style stablecoin payment-review evidence.
 - Oasis-style verifiable private execution evidence.
 - IoTeX/DePIN-style activity-review evidence.
+- The Graph-style receipt metadata indexing evidence.
 
 ## License
 

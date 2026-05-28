@@ -1,0 +1,111 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-the-graph-receipt-indexing-001",
+  "example": true,
+  "created_at": "2026-05-28T17:05:00Z",
+  "scope": "graph_receipt_indexing",
+  "authority": {
+    "grant_id": "grant.the_graph.receipt_indexing.simulated.001",
+    "mode": "observe",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "public_receipt_metadata_indexing.no_private_payloads",
+    "allowed_actions": [
+      "read_public_receipt_metadata",
+      "derive_indexable_receipt_entities",
+      "record_redaction_and_recovery_state"
+    ],
+    "denied_actions": [
+      "publish_raw_prompt",
+      "publish_private_payload",
+      "publish_wallet_secret",
+      "publish_provider_credentials",
+      "index_unredacted_counterparty_data"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.indexing.the_graph_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.the_graph.receipt_indexing_demo",
+    "intent": "Represent how public receipt metadata could be indexed for reviewer queries without storing raw prompts, secrets, or private execution payloads.",
+    "environment": "simulated",
+    "network": "the-graph-indexing-placeholder"
+  },
+  "capability": {
+    "provider": "the_graph",
+    "tool": "receipt_metadata_indexer",
+    "category": "indexing_and_query_evidence",
+    "mcp_provider": "simulated.the_graph.receipt_indexer"
+  },
+  "execution": {
+    "status": "simulated",
+    "started_at": "2026-05-28T17:05:02Z",
+    "finished_at": "2026-05-28T17:05:10Z",
+    "idempotency_key": "the-graph-receipt-indexing-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated indexing profile; no subgraph is deployed and no private payload is indexed."
+    },
+    "indexing_result": "metadata_profile_constructed",
+    "recovery_state": "Publish a minimal subgraph or Substreams demo before using this as a grant-submission proof."
+  },
+  "evidence": {
+    "summary": "The receipt records a simulated Graph-indexable metadata profile for agent receipts while keeping raw prompts, private payloads, secrets, and counterparties out of the indexed surface.",
+    "graph_context": {
+      "indexable_entities": [
+        "Receipt",
+        "AuthorityGrant",
+        "WorkflowRun",
+        "CapabilityUse",
+        "ReceiptArtifact",
+        "RedactionBoundary",
+        "RecoveryState"
+      ],
+      "query_examples": [
+        "find receipts requiring human review",
+        "find failed workflows by capability category",
+        "find receipts with redacted artifacts and recovery state"
+      ],
+      "private_payload_indexed": false,
+      "raw_prompt_indexed": false,
+      "subgraph_deployed": false
+    },
+    "artifacts": [
+      {
+        "type": "indexing_profile",
+        "ref": "artifact://simulated/the-graph/receipt-indexing-profile-001",
+        "redacted": false
+      },
+      {
+        "type": "private_execution_payload",
+        "ref": "artifact://private/the-graph/execution-payload-001",
+        "redacted": true,
+        "reason": "Raw prompts, secrets, counterparties, and private execution details should not be indexed in a public receipt graph."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_metadata_private_payload_boundary",
+    "redacted_fields": [
+      "raw_prompt",
+      "private_execution_payload",
+      "wallet_secret",
+      "counterparty",
+      "provider_credentials",
+      "unredacted_artifact_body"
+    ],
+    "disclosure": "Reviewer sees authority, workflow, capability, status, artifact references, redaction state, and recovery state; private payloads remain outside the indexed graph."
+  },
+  "review": {
+    "trust_state": "graph_indexing_fixture_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is not a deployed subgraph, Substreams module, or production index.",
+      "The indexed surface is limited to public receipt metadata and digest/reference-grade artifacts.",
+      "A Graph grant submission should add a minimal deployed or reproducible indexing demo before claiming full route readiness."
+    ]
+  }
+}
