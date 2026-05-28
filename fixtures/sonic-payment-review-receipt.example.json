@@ -1,0 +1,101 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-sonic-payment-review-001",
+  "example": true,
+  "created_at": "2026-05-28T14:10:00Z",
+  "scope": "sonic_payment_review",
+  "authority": {
+    "grant_id": "grant.sonic.payment_review.read_only.001",
+    "mode": "observe",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "read_only.no_transfer.no_signing.no_custody",
+    "allowed_actions": [
+      "read_public_network_context",
+      "inspect_fee_and_settlement_metadata",
+      "record_payment_policy_evidence"
+    ],
+    "denied_actions": [
+      "transfer_assets",
+      "sign_transaction",
+      "broadcast_transaction",
+      "custody_user_funds",
+      "issue_payment_instruction"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.payments.sonic_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.sonic.payment_review_demo",
+    "intent": "Generate a read-only receipt for an agent-assisted Sonic payment-context review before any transaction is prepared.",
+    "environment": "mainnet_read_only",
+    "network": "sonic-mainnet-read-only-placeholder"
+  },
+  "capability": {
+    "provider": "sonic",
+    "tool": "payment_context_reader",
+    "category": "payment_action_evidence",
+    "mcp_provider": "simulated.sonic.payment_context_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-28T14:10:02Z",
+    "finished_at": "2026-05-28T14:10:09Z",
+    "idempotency_key": "sonic-payment-review-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Read-only example; no Sonic transaction is signed or broadcast."
+    },
+    "payment_review_result": "policy_incomplete_do_not_prepare_transaction",
+    "failure_state": "missing_verified_counterparty_policy",
+    "recovery_state": "Require verified counterparty policy, fee source, and human approval before preparing any transaction."
+  },
+  "evidence": {
+    "summary": "The receipt records Sonic payment-context review evidence while denying transfer, signing, broadcast, custody, and payment-instruction authority.",
+    "sonic_context": {
+      "network": "sonic-mainnet-placeholder",
+      "fee_source": "requires_live_verification",
+      "settlement_reference": "not_prepared",
+      "counterparty_policy": "redacted_or_missing",
+      "asset_movement": false,
+      "transaction_hash": null
+    },
+    "artifacts": [
+      {
+        "type": "payment_policy_review",
+        "ref": "artifact://simulated/sonic/payment-policy-review-001",
+        "redacted": false
+      },
+      {
+        "type": "private_counterparty_context",
+        "ref": "artifact://private/sonic/counterparty-context-001",
+        "redacted": true,
+        "reason": "Counterparty and payment-intent details are not safe for public examples."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "payment_context_minimum_public_disclosure",
+    "redacted_fields": [
+      "raw_prompt",
+      "wallet_address",
+      "counterparty",
+      "private_payment_intent",
+      "provider_credentials",
+      "prepared_transaction"
+    ],
+    "disclosure": "Reviewer sees authority, policy status, no-transfer boundary, cost, failure, and recovery state; private payment context stays redacted."
+  },
+  "review": {
+    "trust_state": "read_only_policy_review",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture does not claim live Sonic transaction volume.",
+      "The agent is explicitly denied transfer, signing, broadcast, and custody authority.",
+      "A funded milestone should replace placeholders with testnet-safe Sonic examples while preserving the same no-custody boundary."
+    ]
+  }
+}

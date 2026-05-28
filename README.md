@@ -30,10 +30,12 @@ An Aweb Agent Receipt captures:
 ## Repository Layout
 
 - `schema/aweb-agent-receipt.v0.1.schema.json` - compact JSON Schema for the example shape.
-- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, DeFi-risk, and DEX route-review contexts.
+- `fixtures/*.example.json` - simulated reviewer fixtures across cross-chain, private, payment-adjacent, MoveVM, HCS, DeFi-risk, DEX route-review, Sonic payment-review, and Tezos/Etherlink contexts.
 - `validate-examples.mjs` - local validator for required receipt fields and nested shape checks.
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
+- `docs/sonic-agent-payment-receipts.md` - Sonic payment-review receipt boundary.
+- `docs/tezos-etherlink-agent-receipts.md` - Tezos/Etherlink execution receipt boundary.
 - `docs/grant-context.md` - how this package supports the Aweb public-good grant track.
 
 ## Validate
@@ -66,6 +68,8 @@ Expected result:
 - Zcash-style private-agent receipt with no raw log boundary.
 - Morpho/Base-style read-only vault-risk classifier evidence.
 - Uniswap-style read-only route-review evidence.
+- Sonic-style read-only payment-context review evidence.
+- Tezos/Etherlink-style simulated execution review evidence.
 
 ## License
 

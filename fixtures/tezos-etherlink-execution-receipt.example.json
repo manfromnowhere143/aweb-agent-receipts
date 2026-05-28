@@ -1,0 +1,98 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-tezos-etherlink-001",
+  "example": true,
+  "created_at": "2026-05-28T14:12:00Z",
+  "scope": "tezos_etherlink_execution",
+  "authority": {
+    "grant_id": "grant.tezos.etherlink.execution_receipts.simulated.001",
+    "mode": "simulate",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "testnet_simulation.no_wallet.no_custody",
+    "allowed_actions": [
+      "read_contract_or_rollup_context",
+      "simulate_agent_action",
+      "record_execution_and_recovery_state"
+    ],
+    "denied_actions": [
+      "sign_transaction",
+      "submit_mainnet_transaction",
+      "custody_user_funds",
+      "modify_live_contract_state"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.tezos.etherlink_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.tezos.etherlink_receipt_demo",
+    "intent": "Represent how an agent-assisted Tezos or Etherlink workflow can preserve authority, simulation, failure, and recovery evidence.",
+    "environment": "simulated",
+    "network": "tezos-or-etherlink-testnet-placeholder"
+  },
+  "capability": {
+    "provider": "tezos",
+    "tool": "etherlink_context_simulator",
+    "category": "developer_experience_execution_evidence",
+    "mcp_provider": "simulated.tezos.etherlink_context_reader"
+  },
+  "execution": {
+    "status": "simulated",
+    "started_at": "2026-05-28T14:12:02Z",
+    "finished_at": "2026-05-28T14:12:08Z",
+    "idempotency_key": "tezos-etherlink-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "No live Tezos or Etherlink transaction."
+    },
+    "simulation_result": "recorded_for_review",
+    "failure_state": null,
+    "recovery_state": "Human review required before any testnet or mainnet action."
+  },
+  "evidence": {
+    "summary": "The receipt captures Tezos/Etherlink context, simulated execution state, redacted traces, and review requirements before any live action.",
+    "tezos_context": {
+      "layer": "tezos-or-etherlink-placeholder",
+      "contract_or_rollup_context": "example_context_only",
+      "operation_hash": null,
+      "wallet_signature": "not_requested",
+      "contract_state_change": false
+    },
+    "artifacts": [
+      {
+        "type": "contract_context_summary",
+        "ref": "artifact://simulated/tezos/contract-context-001",
+        "redacted": false
+      },
+      {
+        "type": "simulation_trace",
+        "ref": "artifact://simulated/tezos/simulation-trace-001",
+        "redacted": true,
+        "reason": "Verbose trace may include private workflow or provider context."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_contract_context_private_trace",
+    "redacted_fields": [
+      "raw_prompt",
+      "wallet_address",
+      "private_operator_notes",
+      "simulation_trace",
+      "provider_credentials"
+    ],
+    "disclosure": "Reviewer sees contract or rollup context category, simulation status, and recovery state; private trace and wallet context stay redacted."
+  },
+  "review": {
+    "trust_state": "simulation_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is developer-experience evidence, not a wallet or custody claim.",
+      "No Tezos or Etherlink transaction is signed, submitted, or represented as live.",
+      "A funded milestone should include testnet-safe Tezos/Etherlink examples and keep the same review-first boundary."
+    ]
+  }
+}

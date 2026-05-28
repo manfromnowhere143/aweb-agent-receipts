@@ -46,6 +46,8 @@
         "private_execution",
         "vault_risk_review",
         "dex_route_review",
+        "sonic_payment_review",
+        "tezos_etherlink_execution",
         "durable_workflow",
         "smart_account"
       ]
