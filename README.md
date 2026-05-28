@@ -36,6 +36,7 @@ An Aweb Agent Receipt captures:
 - `docs/redaction-guide.md` - privacy and disclosure boundary for public receipts.
 - `docs/aave-agent-risk-receipts.md` - Aave pool-risk receipt boundary.
 - `docs/solana-agent-action-receipts.md` - Solana action-review receipt boundary.
+- `docs/solana-foundation-developer-tooling-proposal.md` - Solana Foundation developer-tooling proposal packet.
 - `docs/uniswap-agent-receipts.md` - Uniswap route-review receipt boundary.
 - `docs/sonic-agent-payment-receipts.md` - Sonic payment-review receipt boundary.
 - `docs/tezos-etherlink-agent-receipts.md` - Tezos/Etherlink execution receipt boundary.
