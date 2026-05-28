@@ -1,0 +1,98 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-movement-001",
+  "example": true,
+  "created_at": "2026-05-27T20:47:00Z",
+  "scope": "movevm_execution",
+  "authority": {
+    "grant_id": "grant.movement.movevm.simulated.001",
+    "mode": "simulate",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "testnet_simulation.no_asset_movement",
+    "allowed_actions": [
+      "read_move_module_context",
+      "simulate_agent_action",
+      "record_resource_safety_notes"
+    ],
+    "denied_actions": [
+      "submit_mainnet_transaction",
+      "transfer_assets",
+      "modify_live_contract_state"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.movevm.execution_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.movement.movevm_receipt_demo",
+    "intent": "Represent how an agent-assisted MoveVM action would preserve authority, simulation, and failure evidence.",
+    "environment": "simulated",
+    "network": "movement-testnet-placeholder"
+  },
+  "capability": {
+    "provider": "movement",
+    "tool": "movevm_action_simulator",
+    "category": "movevm_execution_evidence",
+    "mcp_provider": "simulated.movement.movevm_reader"
+  },
+  "execution": {
+    "status": "simulated",
+    "started_at": "2026-05-27T20:47:02Z",
+    "finished_at": "2026-05-27T20:47:09Z",
+    "idempotency_key": "movement-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "No live Movement execution."
+    },
+    "simulation_result": "accepted_in_simulation",
+    "failure_state": null,
+    "recovery_state": "Human review required before any testnet transaction."
+  },
+  "evidence": {
+    "summary": "The receipt captures MoveVM context, resource-safety notes, simulation output, and human-review state before any live action.",
+    "move_context": {
+      "package": "0xexample::aweb_agent_receipts",
+      "module": "receipt_demo",
+      "function": "prepare_agent_action",
+      "resource_access": [
+        "read_only_example_resource"
+      ],
+      "asset_movement": false
+    },
+    "artifacts": [
+      {
+        "type": "move_context",
+        "ref": "artifact://simulated/movement/move-context-001",
+        "redacted": false
+      },
+      {
+        "type": "simulation_trace",
+        "ref": "artifact://simulated/movement/simulation-trace-001",
+        "redacted": true,
+        "reason": "Trace contains verbose internal execution data."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_movevm_context_private_trace",
+    "redacted_fields": [
+      "raw_prompt",
+      "private_account",
+      "simulation_trace",
+      "provider_credentials"
+    ],
+    "disclosure": "Move package/module/function context is visible; private trace details are redacted."
+  },
+  "review": {
+    "trust_state": "simulation_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture demonstrates the intended Movement/MoveVM evidence shape.",
+      "It does not prove deployment to Movement testnet.",
+      "A funded milestone should include a real testnet package or adapter."
+    ]
+  }
+}

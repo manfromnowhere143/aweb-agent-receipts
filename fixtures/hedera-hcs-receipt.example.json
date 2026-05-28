@@ -1,0 +1,100 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-hedera-001",
+  "example": true,
+  "created_at": "2026-05-27T20:46:00Z",
+  "scope": "consensus_ordering",
+  "authority": {
+    "grant_id": "grant.hedera.hcs.simulated.001",
+    "mode": "prepare",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "metadata_only.hcs_candidate.no_secret_payloads",
+    "allowed_actions": [
+      "prepare_receipt_metadata",
+      "compute_receipt_digest",
+      "suggest_hcs_topic_mapping"
+    ],
+    "denied_actions": [
+      "publish_raw_prompt",
+      "publish_private_payload",
+      "submit_mainnet_transaction_without_approval"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.enterprise.audit_receipts",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.hedera.hcs_receipt_demo",
+    "intent": "Prepare selected receipt metadata suitable for ordering or timestamping.",
+    "environment": "simulated",
+    "use_case": "AI workflow audit trail for enterprise or DePIN operations"
+  },
+  "capability": {
+    "provider": "hedera",
+    "tool": "hcs_metadata_mapping",
+    "category": "consensus_ordering",
+    "mcp_provider": "simulated.hedera.hcs_mapper"
+  },
+  "execution": {
+    "status": "prepared",
+    "started_at": "2026-05-27T20:46:02Z",
+    "finished_at": "2026-05-27T20:46:06Z",
+    "idempotency_key": "hedera-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "No live Hedera transaction."
+    },
+    "receipt_digest": "sha256:example-redacted-digest-001",
+    "recovery_state": "Awaiting human approval before any network publication."
+  },
+  "evidence": {
+    "summary": "The receipt separates private workflow data from selected metadata that could be ordered or timestamped through Hedera Consensus Service.",
+    "hedera_context": {
+      "candidate_topic_id": "0.0.example-topic",
+      "message_payload_policy": "digest_only",
+      "ordered_fields": [
+        "receipt_id",
+        "receipt_digest",
+        "workflow_id",
+        "execution.status",
+        "created_at"
+      ]
+    },
+    "artifacts": [
+      {
+        "type": "receipt_digest",
+        "ref": "sha256:example-redacted-digest-001",
+        "redacted": false
+      },
+      {
+        "type": "private_payload",
+        "ref": "artifact://private/hedera/workflow-payload-001",
+        "redacted": true,
+        "reason": "Raw payload contains private workflow context."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "digest_only_public_metadata",
+    "redacted_fields": [
+      "raw_prompt",
+      "private_payload",
+      "operator_notes",
+      "customer_context",
+      "provider_credentials"
+    ],
+    "disclosure": "Only digest-grade metadata is proposed for public ordering."
+  },
+  "review": {
+    "trust_state": "prepared_for_human_review",
+    "human_review_required": true,
+    "review_notes": [
+      "Reviewer can inspect which fields are safe for HCS ordering.",
+      "No raw prompt or private payload is exposed.",
+      "A funded milestone should implement a real testnet HCS example."
+    ]
+  }
+}

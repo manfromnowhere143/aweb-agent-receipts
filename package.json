@@ -1,0 +1,30 @@
+{
+  "name": "@aweb-labs/agent-receipts",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Public reviewer corpus for Aweb Agent Receipts: schema, simulated fixtures, and validator.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "node validate-examples.mjs",
+    "validate": "node validate-examples.mjs"
+  },
+  "files": [
+    "schema",
+    "fixtures",
+    "docs",
+    "validate-examples.mjs",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
+  ],
+  "keywords": [
+    "agent-receipts",
+    "ai-agents",
+    "execution-evidence",
+    "redaction",
+    "mcp",
+    "schema"
+  ]
+}
+

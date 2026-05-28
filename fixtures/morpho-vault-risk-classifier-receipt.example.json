@@ -1,0 +1,99 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-morpho-risk-001",
+  "example": true,
+  "created_at": "2026-05-27T20:50:00Z",
+  "scope": "vault_risk_review",
+  "authority": {
+    "grant_id": "grant.morpho.risk_classifier.read_only.001",
+    "mode": "observe",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "read_only.no_deposit.no_recommendation",
+    "allowed_actions": [
+      "read_public_vault_metadata",
+      "classify_risk_dimensions",
+      "record_data_provider_evidence"
+    ],
+    "denied_actions": [
+      "deposit_assets",
+      "withdraw_assets",
+      "issue_investment_advice",
+      "rebalance_vault"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.defi.vault_risk_classifier",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.morpho.vault_risk_classifier_demo",
+    "intent": "Generate a read-only risk evidence record for a Morpho-style vault review.",
+    "environment": "mainnet_read_only",
+    "network": "base-mainnet-read-only-placeholder"
+  },
+  "capability": {
+    "provider": "morpho",
+    "tool": "vault_metadata_reader",
+    "category": "defi_risk_evidence",
+    "mcp_provider": "simulated.morpho.vault_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-27T20:50:02Z",
+    "finished_at": "2026-05-27T20:50:12Z",
+    "idempotency_key": "morpho-risk-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Read-only example; no transaction."
+    },
+    "risk_result": "incomplete_evidence_do_not_act",
+    "recovery_state": "Require human review and additional verified data sources before any recommendation."
+  },
+  "evidence": {
+    "summary": "The receipt records read-only vault-risk dimensions and explicitly blocks deposits, recommendations, or automated capital movement.",
+    "risk_dimensions": {
+      "curator": "redacted_or_placeholder",
+      "market_liquidity": "unknown_in_fixture",
+      "oracle_dependency": "requires_verification",
+      "collateral_quality": "requires_verification",
+      "borrower_concentration": "requires_verification",
+      "smart_contract_risk": "external_audit_required",
+      "data_freshness": "fixture_not_live"
+    },
+    "artifacts": [
+      {
+        "type": "vault_metadata_snapshot",
+        "ref": "artifact://simulated/morpho/vault-metadata-001",
+        "redacted": true,
+        "reason": "Example uses placeholder vault context."
+      },
+      {
+        "type": "risk_policy",
+        "ref": "policy://read_only.no_deposit.no_recommendation",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_method_private_counterparties",
+    "redacted_fields": [
+      "raw_prompt",
+      "wallet_address",
+      "counterparty",
+      "private_portfolio",
+      "provider_credentials"
+    ],
+    "disclosure": "Risk dimensions and policy limits are visible; user/counterparty information is redacted."
+  },
+  "review": {
+    "trust_state": "read_only_incomplete_evidence",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is not investment advice.",
+      "The agent is explicitly denied deposit, withdrawal, rebalance, and recommendation authority.",
+      "A real demo should connect verified Morpho/Base data sources and keep the same no-custody boundary."
+    ]
+  }
+}

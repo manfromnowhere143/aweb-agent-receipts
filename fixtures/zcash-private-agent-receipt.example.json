@@ -1,0 +1,131 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-zcash-001",
+  "example": true,
+  "created_at": "2026-05-28T06:20:00Z",
+  "scope": "private_execution",
+  "authority": {
+    "grant_id": "grant.zcash.private_agent_receipts.simulated.001",
+    "mode": "simulate",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "zcash_privacy_boundary.no_raw_logs.no_funds",
+    "allowed_actions": [
+      "classify_private_execution_context",
+      "prepare_redacted_agent_receipt",
+      "record_selective_disclosure_notes",
+      "validate_no_raw_prompt_leakage"
+    ],
+    "denied_actions": [
+      "submit_transaction",
+      "move_user_funds",
+      "publish_viewing_keys",
+      "publish_raw_prompt",
+      "publish_counterparty_or_address"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.privacy.zcash_receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.zcash.private_agent_receipt_demo",
+    "intent": "Demonstrate how an AI-agent execution receipt can preserve accountability while redacting private workflow context.",
+    "environment": "simulated",
+    "network": "zcash-placeholder",
+    "privacy_goal": "useful evidence without surveillance-grade raw agent logs"
+  },
+  "capability": {
+    "provider": "zcash",
+    "tool": "private_receipt_boundary_model",
+    "category": "privacy_preserving_execution_evidence",
+    "mcp_provider": "simulated.zcash.privacy_context_reader"
+  },
+  "execution": {
+    "status": "simulated",
+    "started_at": "2026-05-28T06:20:02Z",
+    "finished_at": "2026-05-28T06:20:09Z",
+    "idempotency_key": "zcash-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "No live Zcash transaction or proof generation."
+    },
+    "privacy_checks": {
+      "raw_prompt_leakage": "blocked",
+      "counterparty_leakage": "blocked",
+      "address_leakage": "blocked",
+      "viewing_key_handling": "not_present",
+      "receipt_publication_mode": "redacted_summary_only"
+    },
+    "recovery_state": "A human reviewer can inspect redacted evidence and decide whether more private context is required."
+  },
+  "evidence": {
+    "summary": "The receipt shows how Aweb can preserve execution evidence for a private agent workflow while redacting prompts, counterparties, addresses, and sensitive context.",
+    "zcash_context": {
+      "transaction_hash": null,
+      "shielded_pool_context": "placeholder_only",
+      "viewing_key": "not_present",
+      "memo": "redacted",
+      "public_claim_digest": "sha256:example-zcash-redacted-receipt-digest-001"
+    },
+    "selective_disclosure": {
+      "disclosed": [
+        "agent_had_scoped_authority",
+        "action_was_simulated",
+        "raw_prompt_was_redacted",
+        "no_transaction_was_submitted",
+        "human_review_required"
+      ],
+      "withheld": [
+        "raw_prompt",
+        "private_counterparty",
+        "address_context",
+        "memo_content",
+        "operator_private_notes"
+      ]
+    },
+    "artifacts": [
+      {
+        "type": "redacted_receipt_digest",
+        "ref": "sha256:example-zcash-redacted-receipt-digest-001",
+        "redacted": false
+      },
+      {
+        "type": "private_execution_context",
+        "ref": "artifact://private/zcash/execution-context-001",
+        "redacted": true,
+        "reason": "Private context is intentionally excluded from reviewer-facing records."
+      },
+      {
+        "type": "redaction_report",
+        "ref": "artifact://simulated/zcash/redaction-report-001",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "zcash_private_by_default_public_receipt_minimum",
+    "redacted_fields": [
+      "raw_prompt",
+      "counterparty",
+      "address_context",
+      "memo",
+      "viewing_key",
+      "private_tool_args",
+      "operator_private_notes",
+      "provider_credentials"
+    ],
+    "disclosure": "Reviewer sees scoped authority, execution status, no-transaction boundary, digest, and redaction report only."
+  },
+  "review": {
+    "trust_state": "privacy_fixture_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is designed for Zcash Community Grants review and does not claim live Zcash execution.",
+      "The example demonstrates the public-good problem: agent systems need inspectable evidence, but raw logs can destroy privacy.",
+      "A funded milestone should convert this into a public schema, TypeScript helpers, CLI validator, sample corpus, and lightweight viewer.",
+      "If Zcash-specific cryptographic or wallet integrations are added later, they should preserve the same no-custody and no-raw-log boundaries."
+    ]
+  }
+}

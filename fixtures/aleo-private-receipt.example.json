@@ -1,0 +1,100 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-aleo-001",
+  "example": true,
+  "created_at": "2026-05-27T20:49:00Z",
+  "scope": "private_execution",
+  "authority": {
+    "grant_id": "grant.aleo.private_receipts.simulated.001",
+    "mode": "simulate",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "selective_disclosure.no_raw_prompt",
+    "allowed_actions": [
+      "compute_redacted_receipt",
+      "prepare_selective_disclosure_claim",
+      "record_private_failure_state"
+    ],
+    "denied_actions": [
+      "publish_raw_prompt",
+      "publish_counterparty",
+      "publish_secret_payload"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.privacy.receipt_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.aleo.private_receipt_demo",
+    "intent": "Show how an agent receipt can disclose execution facts without revealing private workflow data.",
+    "environment": "simulated",
+    "privacy_model": "selective_disclosure_placeholder"
+  },
+  "capability": {
+    "provider": "aleo",
+    "tool": "private_receipt_claim_preparer",
+    "category": "privacy_preserving_evidence",
+    "mcp_provider": "simulated.aleo.claim_preparer"
+  },
+  "execution": {
+    "status": "simulated",
+    "started_at": "2026-05-27T20:49:02Z",
+    "finished_at": "2026-05-27T20:49:10Z",
+    "idempotency_key": "aleo-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "No live proof generated."
+    },
+    "selective_disclosure_claims": [
+      "agent_had_scoped_authority",
+      "tool_class_was_allowed",
+      "execution_status_was_recorded",
+      "raw_prompt_was_not_disclosed"
+    ],
+    "recovery_state": "A real milestone should replace placeholder claims with Aleo/Leo proof-of-concept code."
+  },
+  "evidence": {
+    "summary": "The receipt exposes selected facts about execution while keeping raw prompt, secret payload, and counterparty context private.",
+    "private_context": {
+      "raw_prompt": "redacted",
+      "counterparty": "redacted",
+      "secret_payload": "redacted",
+      "public_claim_digest": "sha256:example-privacy-claim-digest-001"
+    },
+    "artifacts": [
+      {
+        "type": "selective_disclosure_claim",
+        "ref": "artifact://simulated/aleo/selective-disclosure-001",
+        "redacted": false
+      },
+      {
+        "type": "private_execution_context",
+        "ref": "artifact://private/aleo/execution-context-001",
+        "redacted": true,
+        "reason": "The core privacy requirement is to avoid exposing raw agent context."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "selective_disclosure_only",
+    "redacted_fields": [
+      "raw_prompt",
+      "counterparty",
+      "secret_payload",
+      "private_tool_args",
+      "provider_credentials"
+    ],
+    "disclosure": "Only selected claims and digest-grade references are visible."
+  },
+  "review": {
+    "trust_state": "privacy_fixture_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture demonstrates why Aleo is relevant to private agent receipts.",
+      "It is not a live Aleo proof.",
+      "A funded milestone should include real Aleo/Leo code for at least one selective-disclosure claim."
+    ]
+  }
+}

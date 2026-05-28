@@ -1,0 +1,96 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-wormhole-001",
+  "example": true,
+  "created_at": "2026-05-27T20:45:00Z",
+  "scope": "cross_chain",
+  "authority": {
+    "grant_id": "grant.cross_chain.simulated.001",
+    "mode": "simulate",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "testnet_only.no_custody.no_live_bridge",
+    "allowed_actions": [
+      "read_route_quote",
+      "simulate_cross_chain_message",
+      "record_provider_evidence"
+    ],
+    "denied_actions": [
+      "submit_mainnet_transaction",
+      "move_user_funds",
+      "claim_bridge_completion"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.scout.cross_chain_receipts",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.wormhole.cross_chain_receipt_demo",
+    "intent": "Prepare a reviewer-safe example receipt for a cross-chain agent workflow.",
+    "environment": "simulated",
+    "source_chain": "Ethereum Sepolia placeholder",
+    "destination_chain": "Base Sepolia placeholder"
+  },
+  "capability": {
+    "provider": "wormhole",
+    "tool": "cross_chain_message_context",
+    "category": "cross_chain_route_evidence",
+    "mcp_provider": "simulated.wormhole.route_reader"
+  },
+  "execution": {
+    "status": "simulated",
+    "started_at": "2026-05-27T20:45:02Z",
+    "finished_at": "2026-05-27T20:45:08Z",
+    "idempotency_key": "wormhole-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "No live network execution."
+    },
+    "failure_state": null,
+    "recovery_state": "No recovery required; example stopped before transaction submission."
+  },
+  "evidence": {
+    "summary": "The receipt preserves scoped authority, route context, provider references, simulated status, and recovery state for a cross-chain agent workflow.",
+    "route_context": {
+      "source_network": "ethereum-sepolia-placeholder",
+      "destination_network": "base-sepolia-placeholder",
+      "message_route_ref": "wormhole-route-placeholder",
+      "message_sequence": "redacted-example-sequence",
+      "delivery_status": "not_submitted"
+    },
+    "artifacts": [
+      {
+        "type": "route_quote",
+        "ref": "artifact://simulated/wormhole/route-quote-001",
+        "redacted": true,
+        "reason": "Route details are illustrative placeholders."
+      },
+      {
+        "type": "operator_policy",
+        "ref": "policy://testnet_only.no_custody.no_live_bridge",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "public_reviewer_example",
+    "redacted_fields": [
+      "raw_prompt",
+      "private_wallet_address",
+      "counterparty",
+      "provider_credentials"
+    ],
+    "disclosure": "Only simulated route metadata and policy state are visible."
+  },
+  "review": {
+    "trust_state": "reviewer_fixture_only",
+    "human_review_required": true,
+    "review_notes": [
+      "This receipt is useful as a format example, not as proof of live Wormhole execution.",
+      "A funded milestone should replace placeholders with testnet-safe provider identifiers.",
+      "The receipt intentionally separates cross-chain message context from authorization to move funds."
+    ]
+  }
+}
