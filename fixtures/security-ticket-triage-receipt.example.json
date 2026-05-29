@@ -1,0 +1,94 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-security-ticket-triage-001",
+  "example": true,
+  "created_at": "2026-05-29T12:20:00Z",
+  "scope": "security_ticket_triage",
+  "authority": {
+    "grant_id": "authority.security.ticket_triage.001",
+    "contract_id": "mission-contract-security-triage-001",
+    "mode": "observe",
+    "authorized_by": "operator:example-security-owner",
+    "policy_profile": "security_triage.no_exploit.no_sensitive_payload_publication",
+    "allowed_actions": [
+      "summarize_ticket_metadata",
+      "classify_severity",
+      "record_redaction_boundary",
+      "prepare_human_review_note"
+    ],
+    "denied_actions": [
+      "run_exploit",
+      "publish_ioc_without_review",
+      "access_customer_payload",
+      "change_firewall_policy",
+      "close_incident_without_approval"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.secops.ticket_triage_agent",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.security.ticket_triage_demo",
+    "contract_id": "mission-contract-security-triage-001",
+    "intent": "Triage a security ticket and prepare a reviewer-safe summary without exposing sensitive payloads or taking remediation action.",
+    "environment": "simulated"
+  },
+  "capability": {
+    "provider": "sentry",
+    "tool": "issue_summary_read",
+    "category": "security_operations_evidence",
+    "mcp_provider": "simulated.sentry.issue_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-29T12:20:03Z",
+    "finished_at": "2026-05-29T12:20:15Z",
+    "idempotency_key": "security-ticket-triage-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated security triage; no exploit, remediation, or customer payload access."
+    },
+    "policy_decision": "triage_summary_allowed_remediation_blocked",
+    "recovery_state": "Ticket can be re-triaged after new logs arrive. Remediation remains blocked until security owner approval."
+  },
+  "evidence": {
+    "summary": "The receipt records a simulated security-ticket triage with explicit denial of exploit execution, payload exposure, and remediation actions.",
+    "artifacts": [
+      {
+        "type": "redacted_ticket_summary",
+        "ref": "artifact://simulated/security/ticket-summary-001",
+        "redacted": true,
+        "reason": "Security tickets may contain exploit details, customer payloads, IP addresses, or sensitive operational data."
+      },
+      {
+        "type": "severity_classification",
+        "ref": "artifact://simulated/security/severity-classification-001",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "security_sensitive_context_redacted",
+    "redacted_fields": [
+      "raw_logs",
+      "exploit_detail",
+      "customer_payload",
+      "ip_addresses",
+      "internal_hostnames",
+      "provider_payload"
+    ],
+    "disclosure": "Only severity class, policy decision, and high-level review state are public."
+  },
+  "review": {
+    "trust_state": "triage_ready_remediation_blocked",
+    "human_review_required": true,
+    "review_notes": [
+      "The agent can classify and summarize, but cannot run exploits or alter security controls.",
+      "Sensitive logs and exploit details are redacted.",
+      "A production workflow should integrate owner approval before remediation."
+    ]
+  }
+}

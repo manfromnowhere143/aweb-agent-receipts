@@ -1,0 +1,325 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aweb-wine.vercel.app/specs/aweb-mission-contract.v0.1.schema.json",
+  "title": "Aweb Mission Contract",
+  "description": "Public pre-execution control schema for AI-agent missions. This schema is an open specification example, not the private Aweb Mission Control Cloud runtime.",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "contract_id",
+    "example",
+    "created_at",
+    "mission",
+    "success_criteria",
+    "allowed_capabilities",
+    "credential_boundaries",
+    "approval_gates",
+    "evidence_requirements",
+    "execution_policy",
+    "recovery_plan",
+    "receipt_schema",
+    "operational_graph"
+  ],
+  "properties": {
+    "contract_version": {
+      "type": "string",
+      "const": "aweb.mission_contract.v0.1"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 8
+    },
+    "example": {
+      "type": "boolean",
+      "const": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "mission": {
+      "type": "object",
+      "required": [
+        "mission_id",
+        "mission_type",
+        "workspace_id",
+        "operator_id",
+        "user_intent",
+        "clarified_business_goal"
+      ],
+      "properties": {
+        "mission_id": {
+          "type": "string"
+        },
+        "mission_type": {
+          "type": "string"
+        },
+        "workspace_id": {
+          "type": "string"
+        },
+        "operator_id": {
+          "type": "string"
+        },
+        "user_intent": {
+          "type": "string"
+        },
+        "clarified_business_goal": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "success_criteria": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "allowed_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "capability_id",
+          "source",
+          "slug",
+          "mode",
+          "risk_class",
+          "approval_required",
+          "evidence_required",
+          "credential_boundary_id"
+        ],
+        "properties": {
+          "capability_id": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "api_warehouse",
+              "mcp_warehouse",
+              "internal"
+            ]
+          },
+          "slug": {
+            "type": "string"
+          },
+          "provider_id": {
+            "type": "string"
+          },
+          "tool_name": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "read",
+              "draft",
+              "write",
+              "send"
+            ]
+          },
+          "risk_class": {
+            "type": "string",
+            "enum": [
+              "read",
+              "draft",
+              "write",
+              "send",
+              "spend",
+              "deploy",
+              "admin",
+              "identity",
+              "legal"
+            ]
+          },
+          "approval_required": {
+            "type": "boolean"
+          },
+          "evidence_required": {
+            "type": "boolean"
+          },
+          "credential_boundary_id": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "minItems": 1
+    },
+    "credential_boundaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "boundary_id",
+          "label",
+          "provider_ids",
+          "allowed_scopes",
+          "denied_scopes",
+          "secret_handling"
+        ],
+        "properties": {
+          "boundary_id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "provider_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowed_scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "denied_scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secret_handling": {
+            "type": "string",
+            "enum": [
+              "runtime_only",
+              "none"
+            ]
+          }
+        },
+        "additionalProperties": true
+      },
+      "minItems": 1
+    },
+    "approval_gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "gate_id",
+          "title",
+          "risk_class",
+          "trigger",
+          "default_decision",
+          "blocks_capabilities"
+        ],
+        "properties": {
+          "gate_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "risk_class": {
+            "type": "string"
+          },
+          "trigger": {
+            "type": "string"
+          },
+          "default_decision": {
+            "type": "string",
+            "const": "block"
+          },
+          "blocks_capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          }
+        },
+        "additionalProperties": true
+      },
+      "minItems": 1
+    },
+    "evidence_requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "requirement_id",
+          "title",
+          "applies_to_capability_ids",
+          "artifact_type",
+          "required",
+          "redaction"
+        ],
+        "properties": {
+          "requirement_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "applies_to_capability_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "artifact_type": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean",
+            "const": true
+          },
+          "redaction": {
+            "type": "string",
+            "enum": [
+              "required",
+              "not_required"
+            ]
+          }
+        },
+        "additionalProperties": true
+      },
+      "minItems": 1
+    },
+    "execution_policy": {
+      "type": "object",
+      "required": [
+        "maestro_runtime",
+        "trust_runtime"
+      ],
+      "additionalProperties": true
+    },
+    "recovery_plan": {
+      "type": "object",
+      "required": [
+        "checkpoints",
+        "retry_policy",
+        "manual_escalation"
+      ],
+      "additionalProperties": true
+    },
+    "receipt_schema": {
+      "type": "object",
+      "required": [
+        "receipt_type",
+        "required_fields",
+        "links_to_contract"
+      ],
+      "additionalProperties": true
+    },
+    "operational_graph": {
+      "type": "object",
+      "required": [
+        "nodes",
+        "edges"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

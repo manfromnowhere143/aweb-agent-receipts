@@ -2,7 +2,7 @@
   "name": "@aweb-labs/agent-receipts",
   "version": "0.1.13",
   "private": false,
-  "description": "Public reviewer corpus for Aweb Agent Receipts: schema, simulated fixtures, and validator.",
+  "description": "Open control and evidence specs for AI-agent work: Mission Contracts, Agent Receipts, simulated fixtures, and validators.",
   "type": "module",
   "license": "Apache-2.0",
   "scripts": {
@@ -14,15 +14,19 @@
     "fixtures",
     "docs",
     "examples",
+    "packages",
     "validate-examples.mjs",
     "README.md",
     "LICENSE",
     "CONTRIBUTING.md"
   ],
   "keywords": [
+    "mission-contracts",
     "agent-receipts",
     "ai-agents",
+    "agent-governance",
     "execution-evidence",
+    "approval-gates",
     "redaction",
     "mcp",
     "schema"

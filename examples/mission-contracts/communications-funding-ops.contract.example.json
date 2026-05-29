@@ -1,0 +1,259 @@
+{
+  "contract_version": "aweb.mission_contract.v0.1",
+  "contract_id": "mission-contract-comms-funding-ops-001",
+  "example": true,
+  "created_at": "2026-05-29T12:00:00Z",
+  "mission": {
+    "mission_id": "mission.comms_funding_ops.demo_001",
+    "mission_type": "communications_funding_ops",
+    "workspace_id": "example-workspace",
+    "operator_id": "operator:example-founder",
+    "user_intent": "Build and run a communications agent fleet for my business funding operations.",
+    "clarified_business_goal": "Research context, triage relevant communications, draft replies, prepare ledger updates, pause for approval on sensitive actions, and preserve receipt-grade evidence."
+  },
+  "success_criteria": [
+    "Safe research and draft steps can proceed without external side effects.",
+    "Mailbox reads, external sends, business-record writes, legal or fundraising claims, spend, and credential changes are blocked until approval.",
+    "Every meaningful action emits an Agent Receipt linked to this Mission Contract.",
+    "Recovery never bypasses Trust Runtime approval gates."
+  ],
+  "allowed_capabilities": [
+    {
+      "capability_id": "cap_research_context",
+      "source": "api_warehouse",
+      "slug": "search.ai_powered",
+      "mode": "read",
+      "risk_class": "read",
+      "approval_required": false,
+      "evidence_required": true,
+      "credential_boundary_id": "boundary_public_research",
+      "purpose": "Research public business, investor, and communication context with citations."
+    },
+    {
+      "capability_id": "cap_create_email_draft",
+      "source": "mcp_warehouse",
+      "slug": "gmail.create_draft",
+      "provider_id": "gmail",
+      "tool_name": "create_draft",
+      "mode": "draft",
+      "risk_class": "draft",
+      "approval_required": false,
+      "evidence_required": true,
+      "credential_boundary_id": "boundary_email_draft",
+      "purpose": "Create reviewable email drafts without sending external communication."
+    },
+    {
+      "capability_id": "cap_send_email",
+      "source": "mcp_warehouse",
+      "slug": "gmail.send_message",
+      "provider_id": "gmail",
+      "tool_name": "send_message",
+      "mode": "send",
+      "risk_class": "send",
+      "approval_required": true,
+      "evidence_required": true,
+      "credential_boundary_id": "boundary_email_send",
+      "purpose": "Send approved external email only after explicit human approval."
+    },
+    {
+      "capability_id": "cap_update_funding_ledger",
+      "source": "mcp_warehouse",
+      "slug": "notion.update_page_markdown",
+      "provider_id": "notion",
+      "tool_name": "update_page_markdown",
+      "mode": "write",
+      "risk_class": "write",
+      "approval_required": true,
+      "evidence_required": true,
+      "credential_boundary_id": "boundary_operator_records",
+      "purpose": "Update a reviewed funding or communications ledger."
+    },
+    {
+      "capability_id": "cap_legal_claim_review",
+      "source": "internal",
+      "slug": "trust.legal_claim_review",
+      "mode": "draft",
+      "risk_class": "legal",
+      "approval_required": true,
+      "evidence_required": true,
+      "credential_boundary_id": "boundary_human_review",
+      "purpose": "Escalate legal, securities, revenue, traction, or fundraising claims before they leave the workspace."
+    }
+  ],
+  "credential_boundaries": [
+    {
+      "boundary_id": "boundary_public_research",
+      "label": "Public research boundary",
+      "provider_ids": ["api_warehouse"],
+      "allowed_scopes": ["search", "read_url", "summarize_public_context"],
+      "denied_scopes": ["credential_write", "payment", "external_send"],
+      "secret_handling": "none"
+    },
+    {
+      "boundary_id": "boundary_email_draft",
+      "label": "Email draft-only boundary",
+      "provider_ids": ["gmail"],
+      "allowed_scopes": ["create_draft"],
+      "denied_scopes": ["send_message", "delete_message", "scope_widening"],
+      "secret_handling": "runtime_only"
+    },
+    {
+      "boundary_id": "boundary_email_send",
+      "label": "Email send boundary",
+      "provider_ids": ["gmail"],
+      "allowed_scopes": ["send_message"],
+      "denied_scopes": ["send_without_approval", "scope_widening"],
+      "secret_handling": "runtime_only"
+    },
+    {
+      "boundary_id": "boundary_operator_records",
+      "label": "Operator record boundary",
+      "provider_ids": ["notion"],
+      "allowed_scopes": ["create_page", "update_page_markdown"],
+      "denied_scopes": ["delete_workspace", "credential_write", "payment"],
+      "secret_handling": "runtime_only"
+    },
+    {
+      "boundary_id": "boundary_human_review",
+      "label": "Human review lane",
+      "provider_ids": ["trust_runtime"],
+      "allowed_scopes": ["approval_token_issue", "policy_decision_log", "receipt_signing"],
+      "denied_scopes": ["auto_approve", "silent_scope_widening"],
+      "secret_handling": "runtime_only"
+    }
+  ],
+  "approval_gates": [
+    {
+      "gate_id": "gate_external_send",
+      "title": "External communication send",
+      "risk_class": "send",
+      "trigger": "Any communication that leaves draft mode.",
+      "default_decision": "block",
+      "blocks_capabilities": ["cap_send_email"]
+    },
+    {
+      "gate_id": "gate_business_record_mutation",
+      "title": "Business record mutation",
+      "risk_class": "write",
+      "trigger": "Any write to the funding ledger or durable operator record.",
+      "default_decision": "block",
+      "blocks_capabilities": ["cap_update_funding_ledger"]
+    },
+    {
+      "gate_id": "gate_legal_or_funding_claim",
+      "title": "Legal or fundraising claim",
+      "risk_class": "legal",
+      "trigger": "Any statement about securities, legal commitments, revenue, traction, or fundraising.",
+      "default_decision": "block",
+      "blocks_capabilities": ["cap_legal_claim_review"]
+    }
+  ],
+  "evidence_requirements": [
+    {
+      "requirement_id": "evidence_research_sources",
+      "title": "Research source excerpts",
+      "applies_to_capability_ids": ["cap_research_context"],
+      "artifact_type": "source_excerpt",
+      "required": true,
+      "redaction": "required"
+    },
+    {
+      "requirement_id": "evidence_draft",
+      "title": "Draft artifact",
+      "applies_to_capability_ids": ["cap_create_email_draft"],
+      "artifact_type": "draft",
+      "required": true,
+      "redaction": "required"
+    },
+    {
+      "requirement_id": "evidence_approval_token",
+      "title": "Approval token and decision log",
+      "applies_to_capability_ids": ["cap_send_email", "cap_update_funding_ledger", "cap_legal_claim_review"],
+      "artifact_type": "approval_token",
+      "required": true,
+      "redaction": "required"
+    },
+    {
+      "requirement_id": "evidence_action_receipt",
+      "title": "Hash-linked Agent Receipt",
+      "applies_to_capability_ids": [
+        "cap_research_context",
+        "cap_create_email_draft",
+        "cap_send_email",
+        "cap_update_funding_ledger",
+        "cap_legal_claim_review"
+      ],
+      "artifact_type": "receipt",
+      "required": true,
+      "redaction": "required"
+    }
+  ],
+  "execution_policy": {
+    "maestro_runtime": {
+      "durable_run_required": true,
+      "checkpointing_required": true,
+      "replay_policy": "receipt_guarded",
+      "max_concurrent_read_steps": 4,
+      "max_concurrent_mutation_steps": 1
+    },
+    "trust_runtime": {
+      "default_decision": "deny",
+      "safe_read_autonomy": "allow",
+      "draft_autonomy": "allow",
+      "external_side_effect_policy": "approval_required",
+      "credential_change_policy": "blocked_without_admin_approval"
+    }
+  },
+  "recovery_plan": {
+    "checkpoints": [
+      "after_contract_compilation",
+      "after_research_context",
+      "before_external_send",
+      "after_business_record_write",
+      "after_receipt_commit"
+    ],
+    "retry_policy": {
+      "max_attempts": 3,
+      "retryable_failure_classes": ["rate_limit", "timeout", "transient_provider"],
+      "non_retryable_failure_classes": ["policy_denied", "approval_rejected", "redaction_failure"]
+    },
+    "rollback_strategy": "Reads and drafts are replayable. Sends are terminal and require a fresh approval token before retry.",
+    "manual_escalation": "Escalate whenever Trust Runtime blocks, evidence is incomplete, or recovery would repeat a side effect."
+  },
+  "receipt_schema": {
+    "receipt_type": "agent_action_receipt",
+    "required_fields": [
+      "contract_id",
+      "mission_id",
+      "action_id",
+      "authority",
+      "capability",
+      "provider",
+      "policy_decision",
+      "approval",
+      "redaction",
+      "cost",
+      "result",
+      "failure",
+      "recovery"
+    ],
+    "hash_chain_required": true,
+    "redaction_required": true,
+    "links_to_contract": true
+  },
+  "operational_graph": {
+    "nodes": [
+      { "node_id": "intent", "kind": "intent", "label": "Operator intent" },
+      { "node_id": "contract", "kind": "contract", "label": "Mission Contract" },
+      { "node_id": "cap_create_email_draft", "kind": "capability", "label": "Gmail draft" },
+      { "node_id": "gate_external_send", "kind": "approval_gate", "label": "External send gate" },
+      { "node_id": "receipt_schema", "kind": "receipt_schema", "label": "Agent Receipt schema" }
+    ],
+    "edges": [
+      { "from": "intent", "to": "contract", "kind": "compiles_to" },
+      { "from": "contract", "to": "cap_create_email_draft", "kind": "governs" },
+      { "from": "gate_external_send", "to": "cap_send_email", "kind": "requires_approval" },
+      { "from": "cap_create_email_draft", "to": "receipt_schema", "kind": "emits_receipt" }
+    ]
+  }
+}

@@ -1,61 +1,56 @@
 # Roadmap
 
-This roadmap is scoped for the public Agent Receipts package. It does not imply
-custody, live-funds automation, wallet control, bridge operation, or production chain
-execution.
+This roadmap is scoped to the public Agent Control Specs package. It does not imply production telemetry, hosted Mission Control Cloud, custody, live-funds automation, wallet control, bridge operation, production deployment authority, security remediation authority, or autonomous external communication.
 
 ## v0.1 - Public Reviewer Corpus
 
-Status: published.
+Status: current.
 
-- JSON Schema for simulated receipt examples.
-- Seven simulated fixtures.
+- Mission Contract example schema.
+- Agent Receipt example schema.
+- Simulated Mission Contract example for communications/funding ops.
+- Simulated non-crypto receipt examples for email, GitHub PR review, cloud deploy approval, security ticket triage, CRM/funding ledger updates, and accounting approval.
+- Simulated high-risk Web3/payment-adjacent stress-test fixtures.
 - Local validator.
-- Redaction guide.
-- Grant-context notes.
+- Source-only TypeScript helper package.
+- Redaction, security, no-crypto-required, and open-core boundary docs.
 - Apache-2.0 license and contribution rules.
 
-## v0.2 - Receipt Profile And Validator
+## v0.2 - Stricter Public Profiles
 
-- Convert the illustrative schema into a stricter public receipt profile.
-- Add unsafe-field checks for prompts, secrets, credentials, private account data,
-  viewing keys, memos, counterparties, private notes, and raw provider payloads.
-- Add clearer status, failure, retry, recovery, and human-review state machines.
+- Convert illustrative schemas into stricter public profiles.
+- Split schema profiles by domain-neutral core, business operations, developer operations, cloud operations, security operations, finance operations, and high-risk stress-test examples.
+- Add unsafe-field checks for prompts, secrets, credentials, private account data, customer records, source code, vulnerability details, invoice details, wallet material, private notes, and raw provider payloads.
+- Add clearer status, failure, retry, recovery, approval, and redaction state machines.
 - Add CI validation for all fixtures.
 
-## v0.3 - TypeScript Helpers
+## v0.3 - TypeScript Package Hardening
 
-- Create receipt constructors.
+- Add generated typed schema exports.
+- Add Mission Contract and Agent Receipt constructors.
 - Add redaction helpers.
-- Add typed schema exports.
-- Add package-level examples for agent frameworks, MCP/API tools, and chain-adjacent
-  workflows.
+- Add receipt-to-contract link helpers.
+- Add package-level examples for agent frameworks, MCP/API tools, business workflows, and optional chain-adjacent workflows.
 
 ## v0.4 - Viewer
 
-- Add a lightweight viewer for authority, capability, outcome, cost, failure,
-  recovery, privacy boundary, and review notes.
+- Add a lightweight static viewer for Mission Contracts and Agent Receipts.
+- Show authority, capability, outcome, cost, failure, recovery, privacy boundary, and review notes.
 - Keep private fields hidden or marked as redacted.
-- Include reviewer-friendly example pages for each fixture.
+- Include reviewer-friendly example pages for non-crypto workflows first.
 
 ## v0.5 - Ecosystem Adapters
 
-Potential adapters depend on grant and community feedback. Candidate tracks include:
+Potential adapters depend on customer, grant, and community feedback. Candidate tracks include:
 
+- business communications receipts,
+- GitHub and developer-operations receipts,
+- cloud-deploy approval receipts,
+- security-ticket triage receipts,
+- CRM/funding ledger receipts,
+- accounting and spend-approval receipts,
 - privacy-preserving receipts,
-- cross-chain route/message receipts,
-- payment-preparation receipts,
-- Aptos payment and gas-policy receipts,
-- Stellar payment and memo-policy receipts,
-- Bitcoin/Lightning invoice and payment-review receipts,
-- digital-security and internet-freedom workflow receipts,
-- Sui object-action and programmable transaction receipts,
-- MoveVM/action-simulation receipts,
-- Solana action-review and transaction-simulation receipts,
-- DeFi pool and risk-review receipts,
 - public-good receipt indexing,
-- permanent archive references.
+- optional chain-adjacent stress-test receipts.
 
-Every adapter should preserve the same safety boundary: no raw prompts, no secrets,
-no private payloads, no custody claims, and no unsafe automation details on public
-surfaces.
+Every adapter should preserve the same safety boundary: no raw prompts, no secrets, no private payloads, no custody claims, no unsafe automation details, no silent external side effects, and no production mutation without explicit approval.

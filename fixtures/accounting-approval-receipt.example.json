@@ -1,0 +1,94 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-accounting-approval-001",
+  "example": true,
+  "created_at": "2026-05-29T12:30:00Z",
+  "scope": "accounting_approval",
+  "authority": {
+    "grant_id": "authority.accounting.invoice_review.001",
+    "contract_id": "mission-contract-accounting-approval-001",
+    "mode": "prepare",
+    "authorized_by": "operator:example-finance-owner",
+    "policy_profile": "invoice_review.no_payment.no_vendor_change_without_approval",
+    "allowed_actions": [
+      "summarize_invoice_metadata",
+      "match_purchase_context",
+      "prepare_approval_request",
+      "record_denied_payment_boundary"
+    ],
+    "denied_actions": [
+      "pay_invoice",
+      "change_vendor_bank_details",
+      "create_purchase_order",
+      "approve_spend",
+      "export_full_invoice"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.finance.invoice_review_agent",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.accounting.invoice_approval_demo",
+    "contract_id": "mission-contract-accounting-approval-001",
+    "intent": "Prepare an invoice approval summary without paying, changing vendor details, or exposing private finance data.",
+    "environment": "simulated"
+  },
+  "capability": {
+    "provider": "accounting_system",
+    "tool": "invoice_metadata_review",
+    "category": "finance_operations_evidence",
+    "mcp_provider": "simulated.accounting.invoice_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-29T12:30:03Z",
+    "finished_at": "2026-05-29T12:30:13Z",
+    "idempotency_key": "accounting-approval-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated invoice review only; no payment or vendor mutation."
+    },
+    "policy_decision": "review_allowed_payment_blocked",
+    "recovery_state": "Approval summary can be regenerated. Payment requires separate finance-owner approval."
+  },
+  "evidence": {
+    "summary": "The receipt records a simulated accounting approval review while denying payment, vendor changes, purchase-order creation, and spend approval.",
+    "artifacts": [
+      {
+        "type": "redacted_invoice_summary",
+        "ref": "artifact://simulated/accounting/invoice-summary-001",
+        "redacted": true,
+        "reason": "Invoices may include vendor, bank, tax, pricing, and contract data."
+      },
+      {
+        "type": "payment_boundary",
+        "ref": "policy://invoice_review.no_payment.no_vendor_change_without_approval",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "finance_private_fields_redacted",
+    "redacted_fields": [
+      "vendor_name",
+      "bank_details",
+      "tax_id",
+      "invoice_number",
+      "contract_terms",
+      "provider_payload"
+    ],
+    "disclosure": "Only review state, denied payment boundary, and approval requirement are public."
+  },
+  "review": {
+    "trust_state": "finance_review_ready_payment_blocked",
+    "human_review_required": true,
+    "review_notes": [
+      "The agent can prepare review evidence but cannot pay invoices or change vendor details.",
+      "Private finance fields are redacted.",
+      "A production workflow should require finance-owner approval before payment or spend changes."
+    ]
+  }
+}

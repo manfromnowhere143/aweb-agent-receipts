@@ -1,0 +1,94 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-comms-funding-email-draft-001",
+  "example": true,
+  "created_at": "2026-05-29T12:05:00Z",
+  "scope": "communications_funding_ops",
+  "authority": {
+    "grant_id": "authority.comms_funding_ops.email_draft.001",
+    "contract_id": "mission-contract-comms-funding-ops-001",
+    "mode": "prepare",
+    "authorized_by": "operator:example-founder",
+    "policy_profile": "draft_only.no_external_send.no_legal_claim_without_review",
+    "allowed_actions": [
+      "summarize_public_context",
+      "prepare_email_draft",
+      "record_approval_request",
+      "record_redaction_boundary"
+    ],
+    "denied_actions": [
+      "send_email",
+      "claim_revenue_or_customer_traction",
+      "make_legal_commitment",
+      "change_mailbox_credentials",
+      "publish_private_thread"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.comms.email_draft_preparer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.comms_funding_ops.email_draft_demo",
+    "contract_id": "mission-contract-comms-funding-ops-001",
+    "intent": "Prepare a reviewable investor or collaborator reply draft without sending external communication.",
+    "environment": "simulated"
+  },
+  "capability": {
+    "provider": "gmail",
+    "tool": "create_draft",
+    "category": "business_communications_evidence",
+    "mcp_provider": "simulated.gmail.draft_writer"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-29T12:05:03Z",
+    "finished_at": "2026-05-29T12:05:12Z",
+    "idempotency_key": "comms-email-draft-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated draft creation only; no external send."
+    },
+    "policy_decision": "draft_allowed_send_blocked",
+    "recovery_state": "Draft can be regenerated. External send requires fresh operator approval."
+  },
+  "evidence": {
+    "summary": "The receipt records a simulated business-communications draft under a Mission Contract. The agent prepared a draft and did not send email or make legal/funding claims.",
+    "artifacts": [
+      {
+        "type": "redacted_email_draft",
+        "ref": "artifact://simulated/comms/email-draft-001",
+        "redacted": true,
+        "reason": "Draft body may contain private founder, investor, collaborator, or business context."
+      },
+      {
+        "type": "approval_request",
+        "ref": "approval://simulated/external-send-request-001",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "business_communications_private_context_redacted",
+    "redacted_fields": [
+      "raw_prompt",
+      "thread_body",
+      "recipient_email",
+      "private_business_context",
+      "provider_payload",
+      "draft_body"
+    ],
+    "disclosure": "Only the draft boundary, policy decision, and review status are public."
+  },
+  "review": {
+    "trust_state": "draft_ready_send_blocked",
+    "human_review_required": true,
+    "review_notes": [
+      "This fixture is domain-neutral and does not depend on Web3.",
+      "The agent is allowed to draft but denied external send authority.",
+      "Any legal, fundraising, revenue, or traction statement requires founder review."
+    ]
+  }
+}

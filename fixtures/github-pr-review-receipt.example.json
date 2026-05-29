@@ -1,0 +1,93 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-github-pr-review-001",
+  "example": true,
+  "created_at": "2026-05-29T12:10:00Z",
+  "scope": "github_pr_review",
+  "authority": {
+    "grant_id": "authority.github.pr_review.001",
+    "contract_id": "mission-contract-devops-review-001",
+    "mode": "observe",
+    "authorized_by": "operator:example-engineering-lead",
+    "policy_profile": "read_only.pr_review.no_merge.no_secret_exposure",
+    "allowed_actions": [
+      "read_pull_request_metadata",
+      "summarize_diff_risk",
+      "prepare_review_comment_draft",
+      "record_test_status_boundary"
+    ],
+    "denied_actions": [
+      "merge_pull_request",
+      "push_commit",
+      "change_branch_protection",
+      "read_repository_secrets",
+      "publish_private_vulnerability_detail"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.devops.pr_review_agent",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.github.pr_review_demo",
+    "contract_id": "mission-contract-devops-review-001",
+    "intent": "Review a pull request and prepare a safe review summary without merging or changing repository state.",
+    "environment": "simulated"
+  },
+  "capability": {
+    "provider": "github",
+    "tool": "pull_request_review_read",
+    "category": "developer_operations_evidence",
+    "mcp_provider": "simulated.github.pr_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-29T12:10:03Z",
+    "finished_at": "2026-05-29T12:10:18Z",
+    "idempotency_key": "github-pr-review-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated read-only PR review; no merge, push, or settings mutation."
+    },
+    "policy_decision": "read_only_summary_allowed_mutation_blocked",
+    "recovery_state": "Reviewer can rerun summary after new commits. Merge remains blocked until human approval outside this fixture."
+  },
+  "evidence": {
+    "summary": "The receipt records a simulated pull-request review with read-only authority and explicit denial of merge, push, branch-protection, and secret access.",
+    "artifacts": [
+      {
+        "type": "redacted_diff_summary",
+        "ref": "artifact://simulated/github/pr-diff-summary-001",
+        "redacted": true,
+        "reason": "Repository content may contain private source code or sensitive implementation details."
+      },
+      {
+        "type": "test_status_snapshot",
+        "ref": "artifact://simulated/github/checks-summary-001",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "source_code_and_security_details_redacted",
+    "redacted_fields": [
+      "raw_diff",
+      "private_file_paths",
+      "repository_secret_names",
+      "security_vulnerability_detail",
+      "provider_payload"
+    ],
+    "disclosure": "Only review state, policy limits, and redacted evidence references are public."
+  },
+  "review": {
+    "trust_state": "review_summary_ready_mutation_blocked",
+    "human_review_required": true,
+    "review_notes": [
+      "The agent can summarize risk and prepare comments, but cannot merge or alter repository state.",
+      "Security-sensitive details remain redacted.",
+      "A production workflow should connect verified CI status and branch protection state while preserving read-only defaults."
+    ]
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-crm-funding-ledger-update-001",
+  "example": true,
+  "created_at": "2026-05-29T12:25:00Z",
+  "scope": "crm_funding_ledger_update",
+  "authority": {
+    "grant_id": "authority.crm.funding_ledger_update.001",
+    "contract_id": "mission-contract-comms-funding-ops-001",
+    "mode": "execute_with_human_approval",
+    "authorized_by": "operator:example-founder",
+    "policy_profile": "business_record_write.requires_approval.no_external_claims",
+    "allowed_actions": [
+      "prepare_record_update",
+      "request_record_write_approval",
+      "write_reviewed_status_update",
+      "record_approval_token"
+    ],
+    "denied_actions": [
+      "delete_record",
+      "change_legal_status",
+      "claim_committed_investment",
+      "send_external_update",
+      "export_private_contacts"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.ops.funding_ledger_agent",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.crm.funding_ledger_update_demo",
+    "contract_id": "mission-contract-comms-funding-ops-001",
+    "intent": "Update a funding or partner-status ledger after human review without creating external claims.",
+    "environment": "simulated"
+  },
+  "capability": {
+    "provider": "notion",
+    "tool": "update_page_markdown",
+    "category": "business_operations_evidence",
+    "mcp_provider": "simulated.notion.page_writer"
+  },
+  "execution": {
+    "status": "succeeded",
+    "started_at": "2026-05-29T12:25:03Z",
+    "finished_at": "2026-05-29T12:25:11Z",
+    "idempotency_key": "crm-funding-ledger-update-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated approved business-record update."
+    },
+    "policy_decision": "write_allowed_with_approval",
+    "approval_token": "approval://simulated/business-record-write-001",
+    "recovery_state": "Update is idempotent and linked to approval token. Deletion and external claims remain denied."
+  },
+  "evidence": {
+    "summary": "The receipt records a simulated approved funding-ledger update with private contacts and sensitive deal state redacted.",
+    "artifacts": [
+      {
+        "type": "approval_token",
+        "ref": "approval://simulated/business-record-write-001",
+        "redacted": false
+      },
+      {
+        "type": "redacted_record_diff",
+        "ref": "artifact://simulated/crm/funding-ledger-diff-001",
+        "redacted": true,
+        "reason": "Business records may contain private contacts, terms, and deal status."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "business_record_private_fields_redacted",
+    "redacted_fields": [
+      "contact_email",
+      "private_notes",
+      "deal_terms",
+      "exact_status",
+      "record_url",
+      "provider_payload"
+    ],
+    "disclosure": "Only approved-write status, idempotency key, and redacted record diff reference are public."
+  },
+  "review": {
+    "trust_state": "approved_write_completed",
+    "human_review_required": true,
+    "review_notes": [
+      "The write was simulated as approved and idempotent.",
+      "No external communication was sent.",
+      "The receipt separates internal record state from public claims."
+    ]
+  }
+}

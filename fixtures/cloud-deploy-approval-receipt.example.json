@@ -1,0 +1,95 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-cloud-deploy-approval-001",
+  "example": true,
+  "created_at": "2026-05-29T12:15:00Z",
+  "scope": "cloud_deploy_approval",
+  "authority": {
+    "grant_id": "authority.cloud.deploy_approval.001",
+    "contract_id": "mission-contract-cloud-deploy-001",
+    "mode": "prepare",
+    "authorized_by": "operator:example-platform-owner",
+    "policy_profile": "deploy_review_only.no_production_mutation_without_approval",
+    "allowed_actions": [
+      "read_deploy_plan",
+      "summarize_environment_diff",
+      "prepare_rollback_plan",
+      "request_deploy_approval"
+    ],
+    "denied_actions": [
+      "deploy_to_production",
+      "change_dns",
+      "change_secrets",
+      "scale_spend",
+      "delete_environment"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.cloud.deploy_reviewer",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.cloud.deploy_approval_demo",
+    "contract_id": "mission-contract-cloud-deploy-001",
+    "intent": "Prepare a cloud deployment approval packet with rollback evidence before any production mutation.",
+    "environment": "simulated"
+  },
+  "capability": {
+    "provider": "vercel",
+    "tool": "deployment_plan_read",
+    "category": "cloud_operations_evidence",
+    "mcp_provider": "simulated.vercel.deploy_reader"
+  },
+  "execution": {
+    "status": "needs_human_review",
+    "started_at": "2026-05-29T12:15:02Z",
+    "finished_at": "2026-05-29T12:15:17Z",
+    "idempotency_key": "cloud-deploy-approval-example-001",
+    "cost": {
+      "amount": 0.0,
+      "unit": "USD",
+      "note": "Simulated deployment review only; no production mutation."
+    },
+    "policy_decision": "approval_packet_allowed_deploy_blocked",
+    "recovery_state": "Deployment remains blocked. Rollback plan must be reviewed before any production action."
+  },
+  "evidence": {
+    "summary": "The receipt records a simulated cloud deployment approval packet with deployment, rollback, secret, DNS, and spend boundaries.",
+    "artifacts": [
+      {
+        "type": "deployment_plan_summary",
+        "ref": "artifact://simulated/cloud/deploy-plan-summary-001",
+        "redacted": true,
+        "reason": "Deployment details may expose private infrastructure topology."
+      },
+      {
+        "type": "rollback_plan",
+        "ref": "artifact://simulated/cloud/rollback-plan-001",
+        "redacted": true,
+        "reason": "Rollback commands and environment IDs are private."
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "cloud_infrastructure_details_redacted",
+    "redacted_fields": [
+      "raw_deploy_plan",
+      "environment_ids",
+      "secret_names",
+      "dns_records",
+      "rollback_commands",
+      "provider_payload"
+    ],
+    "disclosure": "Only deployment review class, denied mutations, and approval state are public."
+  },
+  "review": {
+    "trust_state": "deploy_blocked_pending_approval",
+    "human_review_required": true,
+    "review_notes": [
+      "The agent prepared review evidence but did not deploy.",
+      "Production mutation, DNS changes, secret changes, spend changes, and deletion are denied.",
+      "A real deployment workflow should require an approval token and post-deploy receipt."
+    ]
+  }
+}

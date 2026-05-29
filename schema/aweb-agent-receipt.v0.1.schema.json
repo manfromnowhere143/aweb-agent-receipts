@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aweb-wine.vercel.app/specs/aweb-agent-receipt.v0.1.schema.json",
   "title": "Aweb Agent Receipt",
-  "description": "Illustrative schema for grant-reviewer examples. This is not yet the final public package contract.",
+  "description": "Public example schema for post-execution AI-agent evidence. This is an open specification example, not the private Aweb Mission Control Cloud runtime.",
   "type": "object",
   "required": [
     "receipt_version",
@@ -60,6 +60,12 @@
         "depin_activity_review",
         "graph_receipt_indexing",
         "solana_action_review",
+        "communications_funding_ops",
+        "github_pr_review",
+        "cloud_deploy_approval",
+        "security_ticket_triage",
+        "crm_funding_ledger_update",
+        "accounting_approval",
         "durable_workflow",
         "smart_account"
       ]
