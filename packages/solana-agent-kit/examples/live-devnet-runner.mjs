@@ -18,6 +18,7 @@
 // No secrets are read by this file: the RPC URL comes from the environment.
 // The keypair never leaves the process and is never written to disk.
 // Apache-2.0.
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import * as web3 from '@solana/web3.js';
 import {
   GovernedSolanaAgent, buildPlan, defaultPolicyProfile, toPublicSpecReceipt,
@@ -30,8 +31,19 @@ const MEMO = new web3.PublicKey('MemoSq4gq4mDmTBvVUqDUfFHPNe9KQ9N7s8VeQc5UqV');
 const TEXT = process.env.AWEB_MEMO_TEXT || 'Aweb AgentKit — governed agent action (devnet demo)';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const kp = web3.Keypair.generate();
-console.log('Scoped session signer (devnet):', kp.publicKey.toBase58());
+// PERSISTENT scoped keypair: a stable devnet address that survives restarts, so
+// funds can never be stranded by an exited process. Devnet-only, valueless.
+// Stored outside any repo (default: a temp path); never committed.
+const KEYPAIR_FILE = process.env.AWEB_KEYPAIR_FILE || '/tmp/aweb-solana-live/signer.json';
+let kp;
+if (existsSync(KEYPAIR_FILE)) {
+  kp = web3.Keypair.fromSecretKey(Uint8Array.from(JSON.parse(readFileSync(KEYPAIR_FILE, 'utf8'))));
+  console.log('Loaded persistent scoped signer (devnet):', kp.publicKey.toBase58());
+} else {
+  kp = web3.Keypair.generate();
+  try { writeFileSync(KEYPAIR_FILE, JSON.stringify([...kp.secretKey])); } catch {}
+  console.log('Generated persistent scoped signer (devnet):', kp.publicKey.toBase58());
+}
 console.log('RPC:', RPC.replace(/\/v2\/.*/, '/v2/****'));
 
 // Fund: attempt airdrop, and concurrently poll for external funding.
