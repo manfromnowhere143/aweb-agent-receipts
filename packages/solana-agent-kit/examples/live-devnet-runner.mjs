@@ -82,10 +82,14 @@ const bal = await waitForFunds();
 if (!bal) { console.error('Not funded within the wait window. Re-run, or fund the address above.'); process.exit(2); }
 console.log('Funded:', bal / web3.LAMPORTS_PER_SOL, 'devnet SOL\n');
 
+// On-chain action: a governed self-transfer via the System Program (always
+// present on every cluster). A real value-movement instruction — classified
+// VALUE_MOVEMENT, gated by approval + caps. Value stays with the signer.
+const MARKER_LAMPORTS = 1000;
 const buildTx = async () => {
   const { blockhash } = await conn.getLatestBlockhash();
   const tx = new web3.Transaction();
-  tx.add(new web3.TransactionInstruction({ keys: [], programId: MEMO, data: Buffer.from(TEXT, 'utf8') }));
+  tx.add(web3.SystemProgram.transfer({ fromPubkey: kp.publicKey, toPubkey: kp.publicKey, lamports: MARKER_LAMPORTS }));
   tx.feePayer = kp.publicKey; tx.recentBlockhash = blockhash; return tx;
 };
 const port = {
@@ -104,10 +108,15 @@ const port = {
 const signer = { publicKey: kp.publicKey.toBase58(), scope: 'devnet:limited:memo-only',
   sign: async (h) => Buffer.from(`approved:${h}`).toString('base64') };
 
+const SYSTEM_PROGRAM = '11111111111111111111111111111111';
 const plan = buildPlan({
-  intent: 'Write an on-chain launch marker (governed devnet memo)',
+  intent: 'Execute a governed on-chain launch marker (devnet self-transfer)',
   feePayer: kp.publicKey.toBase58(), cluster: 'devnet',
-  instructions: [{ programId: MEMO.toBase58(), kind: 'memo', accounts: [], dataSummary: `memo: "${TEXT}"` }],
+  instructions: [{
+    programId: SYSTEM_PROGRAM, kind: 'transfer', lamports: MARKER_LAMPORTS,
+    accounts: [{ pubkey: kp.publicKey.toBase58(), isSigner: true, isWritable: true }],
+    dataSummary: `system self-transfer ${MARKER_LAMPORTS} lamports — governed devnet marker (${TEXT})`,
+  }],
 });
 const agent = new GovernedSolanaAgent({ connection: port, signer, policy: defaultPolicyProfile(), approvalSecret: process.env.AWEB_APPROVAL_SECRET || 'live-runtime-secret-not-persisted' });
 
