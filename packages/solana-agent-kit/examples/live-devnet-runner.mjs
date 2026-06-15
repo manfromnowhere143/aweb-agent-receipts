@@ -136,4 +136,17 @@ console.log('explorer : https://explorer.solana.com/tx/' + res.signature + '?clu
 console.log('receipts :', chain.length, '| chain verified', chain.verified);
 console.log('\nPublic-spec broadcast receipt:');
 console.log(JSON.stringify(toPublicSpecReceipt(agent.ledger.all.find((r) => r.step === 'broadcast')), null, 2));
+
+// Optionally emit the full receipt ledger (for the receipt explorer / evidence).
+if (process.env.AWEB_LEDGER_OUT) {
+  writeFileSync(process.env.AWEB_LEDGER_OUT, JSON.stringify({
+    _note: 'Real Solana devnet governed run via @aweb-labs/solana-agent-kit. Live on-chain data.',
+    chain_verified: chain.verified,
+    receipt_count: chain.length,
+    signature: res.signature,
+    explorer: 'https://explorer.solana.com/tx/' + res.signature + '?cluster=devnet',
+    receipts: agent.ledger.all,
+  }, null, 2) + '\n');
+  console.log('ledger written to', process.env.AWEB_LEDGER_OUT);
+}
 process.exit(0);

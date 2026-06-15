@@ -1,12 +1,15 @@
 {
-  "_note": "Deterministic offline demo run from @aweb-labs/solana-agent-kit. Mock signature/slot; not live chain data.",
+  "_note": "REAL Solana devnet governed run via @aweb-labs/solana-agent-kit — live on-chain data, independently verifiable.",
+  "live": true,
   "chain_verified": true,
   "receipt_count": 5,
+  "signature": "jEp6MzWRHH8wduQCDCSyF8ARwcYWV4znQJmCmd7khtdvc8XUQKeqkpdjvX4iL1kDfi1PKhPyHKLobZS3wczm1dG",
+  "explorer": "https://explorer.solana.com/tx/jEp6MzWRHH8wduQCDCSyF8ARwcYWV4znQJmCmd7khtdvc8XUQKeqkpdjvX4iL1kDfi1PKhPyHKLobZS3wczm1dG?cluster=devnet",
   "receipts": [
     {
       "receipt_version": "aweb.agent_receipt.v0.1",
       "receipt_id": "aweb-solana-plan-001",
-      "created_at": "2025-10-09T08:53:22.000Z",
+      "created_at": "2026-06-15T09:52:25.083Z",
       "scope": "solana_action_review",
       "step": "plan",
       "authority": {
@@ -31,8 +34,8 @@
         "operator": "Aweb Labs"
       },
       "workflow": {
-        "workflow_id": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
-        "intent": "Launch Aweb Demo: on-chain launch marker + small account seed",
+        "workflow_id": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
+        "intent": "Execute a governed on-chain launch marker (devnet self-transfer)",
         "environment": "testnet",
         "network": "solana-devnet"
       },
@@ -49,9 +52,9 @@
       },
       "execution": {
         "status": "prepared",
-        "started_at": "2025-10-09T08:53:21.000Z",
-        "finished_at": "2025-10-09T08:53:22.000Z",
-        "idempotency_key": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-.plan",
+        "started_at": "2026-06-15T09:52:25.083Z",
+        "finished_at": "2026-06-15T09:52:25.083Z",
+        "idempotency_key": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke.plan",
         "cost": {
           "amount": 0,
           "unit": "USD",
@@ -61,16 +64,14 @@
         "simulation_status": "not_simulated"
       },
       "evidence": {
-        "summary": "Agent plan step (prepared) for a memo+transfer transaction on solana-devnet; no broadcast.",
+        "summary": "Agent plan step (prepared) for a transfer transaction on solana-devnet; no broadcast.",
         "solana_context": {
           "cluster": "devnet",
-          "fee_payer": "SESSdevnetScopedSignerPublicKeyPlaceholder1",
+          "fee_payer": "3Yqh2MxdW5F44SgcZFEJ8d7a7Vzdh3pVcFNfJSwsc1w8",
           "instruction_classes": [
-            "memo",
             "transfer"
           ],
           "program_ids": [
-            "MemoSq4gq4mDmTBvV0EQ2sQ6yJpL9wXqL4n7z8aB3cD",
             "11111111111111111111111111111111"
           ],
           "compute_units": null,
@@ -82,7 +83,7 @@
         "artifacts": [
           {
             "type": "transaction_plan",
-            "ref": "plan://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+            "ref": "plan://wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
             "redacted": false
           }
         ]
@@ -105,12 +106,12 @@
         ]
       },
       "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-      "receipt_hash": "df30b4ff83605303501e9b728ea3098b47e038d66c2bf12337bb90eda70f6df3"
+      "receipt_hash": "b79ac30403bbf216417966622a11a5b9dbf35fae9c685d84cb63d72657050273"
     },
     {
       "receipt_version": "aweb.agent_receipt.v0.1",
       "receipt_id": "aweb-solana-simulate-002",
-      "created_at": "2025-10-09T08:53:24.000Z",
+      "created_at": "2026-06-15T09:52:26.157Z",
       "scope": "solana_action_review",
       "step": "simulate",
       "authority": {
@@ -135,8 +136,8 @@
         "operator": "Aweb Labs"
       },
       "workflow": {
-        "workflow_id": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
-        "intent": "Launch Aweb Demo: on-chain launch marker + small account seed",
+        "workflow_id": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
+        "intent": "Execute a governed on-chain launch marker (devnet self-transfer)",
         "environment": "testnet",
         "network": "solana-devnet"
       },
@@ -153,9 +154,9 @@
       },
       "execution": {
         "status": "needs_human_review",
-        "started_at": "2025-10-09T08:53:23.000Z",
-        "finished_at": "2025-10-09T08:53:24.000Z",
-        "idempotency_key": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-.simulate",
+        "started_at": "2026-06-15T09:52:26.157Z",
+        "finished_at": "2026-06-15T09:52:26.157Z",
+        "idempotency_key": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke.simulate",
         "cost": {
           "amount": 0,
           "unit": "USD",
@@ -165,19 +166,17 @@
         "simulation_status": "simulated_ok"
       },
       "evidence": {
-        "summary": "Agent simulate step (needs_human_review) for a memo+transfer transaction on solana-devnet; no broadcast.",
+        "summary": "Agent simulate step (needs_human_review) for a transfer transaction on solana-devnet; no broadcast.",
         "solana_context": {
           "cluster": "devnet",
-          "fee_payer": "SESSdevnetScopedSignerPublicKeyPlaceholder1",
+          "fee_payer": "3Yqh2MxdW5F44SgcZFEJ8d7a7Vzdh3pVcFNfJSwsc1w8",
           "instruction_classes": [
-            "memo",
             "transfer"
           ],
           "program_ids": [
-            "MemoSq4gq4mDmTBvV0EQ2sQ6yJpL9wXqL4n7z8aB3cD",
             "11111111111111111111111111111111"
           ],
-          "compute_units": 7400,
+          "compute_units": 150,
           "transaction_signature": null,
           "slot": null,
           "broadcast": false,
@@ -186,12 +185,12 @@
         "artifacts": [
           {
             "type": "transaction_plan",
-            "ref": "plan://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+            "ref": "plan://wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
             "redacted": false
           },
           {
             "type": "simulation_logs",
-            "ref": "sim://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+            "ref": "sim://wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
             "redacted": false
           }
         ]
@@ -213,17 +212,17 @@
           "broadcast requires explicit, scoped, human-approved grant (simulate-by-default)"
         ]
       },
-      "previous_hash": "df30b4ff83605303501e9b728ea3098b47e038d66c2bf12337bb90eda70f6df3",
-      "receipt_hash": "0dddf2869c95a4519de32a3c38ad2936effb9fec8c5baae7e58475c33d9d13a2"
+      "previous_hash": "b79ac30403bbf216417966622a11a5b9dbf35fae9c685d84cb63d72657050273",
+      "receipt_hash": "5f81193febfbf18ced5973282878171368fdc090788f9fd08e7a69f8c578a8e1"
     },
     {
       "receipt_version": "aweb.agent_receipt.v0.1",
       "receipt_id": "aweb-solana-approval-003",
-      "created_at": "2025-10-09T08:53:27.000Z",
+      "created_at": "2026-06-15T09:52:26.158Z",
       "scope": "solana_action_review",
       "step": "await_approval",
       "authority": {
-        "grant_id": "grant.solana.8670ff7368d4",
+        "grant_id": "grant.solana.c2aab43c0935",
         "mode": "prepare",
         "authorized_by": "operator:daniel-wahnich",
         "policy_profile": "devnet.needs_approval",
@@ -244,8 +243,8 @@
         "operator": "Aweb Labs"
       },
       "workflow": {
-        "workflow_id": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
-        "intent": "Launch Aweb Demo: on-chain launch marker + small account seed",
+        "workflow_id": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
+        "intent": "Execute a governed on-chain launch marker (devnet self-transfer)",
         "environment": "testnet",
         "network": "solana-devnet"
       },
@@ -264,9 +263,9 @@
       },
       "execution": {
         "status": "prepared",
-        "started_at": "2025-10-09T08:53:26.000Z",
-        "finished_at": "2025-10-09T08:53:27.000Z",
-        "idempotency_key": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-.await_approval",
+        "started_at": "2026-06-15T09:52:26.158Z",
+        "finished_at": "2026-06-15T09:52:26.158Z",
+        "idempotency_key": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke.await_approval",
         "cost": {
           "amount": 0,
           "unit": "USD",
@@ -276,19 +275,17 @@
         "simulation_status": "simulated_ok"
       },
       "evidence": {
-        "summary": "Agent await_approval step (prepared) for a memo+transfer transaction on solana-devnet; no broadcast.",
+        "summary": "Agent await_approval step (prepared) for a transfer transaction on solana-devnet; no broadcast.",
         "solana_context": {
           "cluster": "devnet",
-          "fee_payer": "SESSdevnetScopedSignerPublicKeyPlaceholder1",
+          "fee_payer": "3Yqh2MxdW5F44SgcZFEJ8d7a7Vzdh3pVcFNfJSwsc1w8",
           "instruction_classes": [
-            "memo",
             "transfer"
           ],
           "program_ids": [
-            "MemoSq4gq4mDmTBvV0EQ2sQ6yJpL9wXqL4n7z8aB3cD",
             "11111111111111111111111111111111"
           ],
-          "compute_units": 7400,
+          "compute_units": 150,
           "transaction_signature": null,
           "slot": null,
           "broadcast": false,
@@ -297,12 +294,12 @@
         "artifacts": [
           {
             "type": "transaction_plan",
-            "ref": "plan://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+            "ref": "plan://wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
             "redacted": false
           },
           {
             "type": "simulation_logs",
-            "ref": "sim://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+            "ref": "sim://wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
             "redacted": false
           }
         ]
@@ -324,17 +321,17 @@
           "broadcast requires explicit, scoped, human-approved grant (simulate-by-default)"
         ]
       },
-      "previous_hash": "0dddf2869c95a4519de32a3c38ad2936effb9fec8c5baae7e58475c33d9d13a2",
-      "receipt_hash": "0908a7e89443ec7637fdd9bebe5e8f608e835826f3fb0fefee82e25d1bc5cb29"
+      "previous_hash": "5f81193febfbf18ced5973282878171368fdc090788f9fd08e7a69f8c578a8e1",
+      "receipt_hash": "275a72c1a986068399e03b2a4ee34fd90aaa05e50ac083617f4046ad3b425c04"
     },
     {
       "receipt_version": "aweb.agent_receipt.v0.1",
       "receipt_id": "aweb-solana-sign-004",
-      "created_at": "2025-10-09T08:53:30.000Z",
+      "created_at": "2026-06-15T09:52:26.158Z",
       "scope": "solana_action_review",
       "step": "sign",
       "authority": {
-        "grant_id": "grant.solana.8670ff7368d4",
+        "grant_id": "grant.solana.c2aab43c0935",
         "mode": "prepare",
         "authorized_by": "operator:daniel-wahnich",
         "policy_profile": "devnet.needs_approval",
@@ -355,8 +352,8 @@
         "operator": "Aweb Labs"
       },
       "workflow": {
-        "workflow_id": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
-        "intent": "Launch Aweb Demo: on-chain launch marker + small account seed",
+        "workflow_id": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
+        "intent": "Execute a governed on-chain launch marker (devnet self-transfer)",
         "environment": "testnet",
         "network": "solana-devnet"
       },
@@ -375,9 +372,9 @@
       },
       "execution": {
         "status": "prepared",
-        "started_at": "2025-10-09T08:53:29.000Z",
-        "finished_at": "2025-10-09T08:53:30.000Z",
-        "idempotency_key": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-.sign",
+        "started_at": "2026-06-15T09:52:26.158Z",
+        "finished_at": "2026-06-15T09:52:26.158Z",
+        "idempotency_key": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke.sign",
         "cost": {
           "amount": 0,
           "unit": "USD",
@@ -387,19 +384,17 @@
         "simulation_status": "simulated_ok"
       },
       "evidence": {
-        "summary": "Agent sign step (prepared) for a memo+transfer transaction on solana-devnet; no broadcast.",
+        "summary": "Agent sign step (prepared) for a transfer transaction on solana-devnet; no broadcast.",
         "solana_context": {
           "cluster": "devnet",
-          "fee_payer": "SESSdevnetScopedSignerPublicKeyPlaceholder1",
+          "fee_payer": "3Yqh2MxdW5F44SgcZFEJ8d7a7Vzdh3pVcFNfJSwsc1w8",
           "instruction_classes": [
-            "memo",
             "transfer"
           ],
           "program_ids": [
-            "MemoSq4gq4mDmTBvV0EQ2sQ6yJpL9wXqL4n7z8aB3cD",
             "11111111111111111111111111111111"
           ],
-          "compute_units": 7400,
+          "compute_units": 150,
           "transaction_signature": null,
           "slot": null,
           "broadcast": false,
@@ -408,12 +403,12 @@
         "artifacts": [
           {
             "type": "transaction_plan",
-            "ref": "plan://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+            "ref": "plan://wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
             "redacted": false
           },
           {
             "type": "simulation_logs",
-            "ref": "sim://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+            "ref": "sim://wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
             "redacted": false
           }
         ]
@@ -435,17 +430,17 @@
           "broadcast requires explicit, scoped, human-approved grant (simulate-by-default)"
         ]
       },
-      "previous_hash": "0908a7e89443ec7637fdd9bebe5e8f608e835826f3fb0fefee82e25d1bc5cb29",
-      "receipt_hash": "81b89ebf02465927360323ccb96f220e36068a7a0a561e92dade9142d9bcb370"
+      "previous_hash": "275a72c1a986068399e03b2a4ee34fd90aaa05e50ac083617f4046ad3b425c04",
+      "receipt_hash": "f968a3e361afa616d4dc70abc0f3f7344de35cdeb9e7a135730522675923e04e"
     },
     {
       "receipt_version": "aweb.agent_receipt.v0.1",
       "receipt_id": "aweb-solana-broadcast-005",
-      "created_at": "2025-10-09T08:53:32.000Z",
+      "created_at": "2026-06-15T09:52:29.238Z",
       "scope": "solana_action_review",
       "step": "broadcast",
       "authority": {
-        "grant_id": "grant.solana.8670ff7368d4",
+        "grant_id": "grant.solana.c2aab43c0935",
         "mode": "execute_with_human_approval",
         "authorized_by": "operator:daniel-wahnich",
         "policy_profile": "devnet.needs_approval",
@@ -466,8 +461,8 @@
         "operator": "Aweb Labs"
       },
       "workflow": {
-        "workflow_id": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
-        "intent": "Launch Aweb Demo: on-chain launch marker + small account seed",
+        "workflow_id": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
+        "intent": "Execute a governed on-chain launch marker (devnet self-transfer)",
         "environment": "testnet",
         "network": "solana-devnet"
       },
@@ -486,45 +481,43 @@
       },
       "execution": {
         "status": "succeeded",
-        "started_at": "2025-10-09T08:53:31.000Z",
-        "finished_at": "2025-10-09T08:53:32.000Z",
-        "idempotency_key": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-.broadcast",
+        "started_at": "2026-06-15T09:52:29.238Z",
+        "finished_at": "2026-06-15T09:52:29.238Z",
+        "idempotency_key": "wf.solana.devnet.execute-a-governed-on-chain-launch-marke.broadcast",
         "cost": {
           "amount": 0,
           "unit": "USD",
-          "fee_lamports": 10000,
+          "fee_lamports": 5000,
           "note": "devnet fees only; no real value moved"
         },
         "simulation_status": "simulated_ok"
       },
       "evidence": {
-        "summary": "Agent broadcast a governed memo+transfer transaction on solana-devnet after human approval; signature recorded.",
+        "summary": "Agent broadcast a governed transfer transaction on solana-devnet after human approval; signature recorded.",
         "solana_context": {
           "cluster": "devnet",
-          "fee_payer": "SESSdevnetScopedSignerPublicKeyPlaceholder1",
+          "fee_payer": "3Yqh2MxdW5F44SgcZFEJ8d7a7Vzdh3pVcFNfJSwsc1w8",
           "instruction_classes": [
-            "memo",
             "transfer"
           ],
           "program_ids": [
-            "MemoSq4gq4mDmTBvV0EQ2sQ6yJpL9wXqL4n7z8aB3cD",
             "11111111111111111111111111111111"
           ],
-          "compute_units": 7400,
-          "transaction_signature": "MOCK3bcd6577f48650d540a54bc52204e64521a72cf93ad7a8d43d46aa07f9a8f79c",
-          "slot": 250000001,
+          "compute_units": 150,
+          "transaction_signature": "jEp6MzWRHH8wduQCDCSyF8ARwcYWV4znQJmCmd7khtdvc8XUQKeqkpdjvX4iL1kDfi1PKhPyHKLobZS3wczm1dG",
+          "slot": 469580164,
           "broadcast": true,
-          "explorer_url": "https://explorer.solana.com/tx/MOCK3bcd6577f48650d540a54bc52204e64521a72cf93ad7a8d43d46aa07f9a8f79c?cluster=devnet"
+          "explorer_url": "https://explorer.solana.com/tx/jEp6MzWRHH8wduQCDCSyF8ARwcYWV4znQJmCmd7khtdvc8XUQKeqkpdjvX4iL1kDfi1PKhPyHKLobZS3wczm1dG?cluster=devnet"
         },
         "artifacts": [
           {
             "type": "transaction_plan",
-            "ref": "plan://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+            "ref": "plan://wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
             "redacted": false
           },
           {
             "type": "simulation_logs",
-            "ref": "sim://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+            "ref": "sim://wf.solana.devnet.execute-a-governed-on-chain-launch-marke",
             "redacted": false
           }
         ]
@@ -546,8 +539,8 @@
           "broadcast requires explicit, scoped, human-approved grant (simulate-by-default)"
         ]
       },
-      "previous_hash": "81b89ebf02465927360323ccb96f220e36068a7a0a561e92dade9142d9bcb370",
-      "receipt_hash": "0b1b78316cbdeb01f5b97213b82831fb6e091d7ef4c11dd63842912fb6d0cc0a"
+      "previous_hash": "f968a3e361afa616d4dc70abc0f3f7344de35cdeb9e7a135730522675923e04e",
+      "receipt_hash": "db868a9da5cfbb76a567da53a012934c9b566ed18984a096b3d04c009c1960a8"
     }
   ]
 }
