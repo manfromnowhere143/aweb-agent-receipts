@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aweb Agent Receipt Explorer — Solana</title>
+<style>
+  :root{
+    --bg:#070b14; --panel:rgba(255,255,255,.04); --line:rgba(255,255,255,.10);
+    --ink:#e9eef7; --dim:#8c9bb5; --good:#39d98a; --warn:#ffcc66; --bad:#ff6b6b;
+    --acc:#7c9cff; --acc2:#34e0c9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 700px at 70% -10%,rgba(52,224,201,.10),transparent 60%),radial-gradient(900px 600px at 10% 110%,rgba(124,156,255,.10),transparent 55%),var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:40px 22px 80px}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .logo{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;font-weight:800;color:#05202a}
+  h1{font-size:20px;margin:0;letter-spacing:.2px}
+  .sub{color:var(--dim);font-size:13px;margin:2px 0 0}
+  .badge{margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-size:13px;font-weight:600}
+  .dot{width:9px;height:9px;border-radius:50%}
+  .ok .dot{background:var(--good);box-shadow:0 0 12px var(--good)} .ok{color:var(--good)}
+  .fail .dot{background:var(--bad)} .fail{color:var(--bad)}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--dim);font-size:13px;margin:18px 0 26px}
+  .meta b{color:var(--ink);font-weight:600}
+  .card{position:relative;border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:18px 18px 16px;margin:0 0 14px;backdrop-filter:blur(8px)}
+  .card:before{content:"";position:absolute;left:-1px;top:18px;bottom:18px;width:3px;border-radius:3px;background:linear-gradient(var(--acc),var(--acc2))}
+  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .step{font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:12px;color:var(--acc2)}
+  .pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--line)}
+  .s-succeeded,.s-simulated,.s-prepared{color:var(--good);border-color:rgba(57,217,138,.4)}
+  .s-needs_human_review{color:var(--warn);border-color:rgba(255,204,102,.4)}
+  .s-rejected,.s-failed{color:var(--bad);border-color:rgba(255,107,107,.4)}
+  .summary{margin:11px 0 12px;color:var(--ink)}
+  .kv{display:grid;grid-template-columns:140px 1fr;gap:6px 14px;font-size:13px}
+  .kv .k{color:var(--dim)} .kv .v{color:var(--ink);word-break:break-all;font-variant-numeric:tabular-nums}
+  .hash{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--dim)}
+  .chainlink{display:flex;align-items:center;gap:8px;margin:10px 0 0;font-size:12px;color:var(--dim);font-family:ui-monospace,monospace}
+  .verok{color:var(--good)} .verbad{color:var(--bad)}
+  a{color:var(--acc)} a:hover{color:var(--acc2)}
+  .note{margin-top:30px;color:var(--dim);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
+  textarea{width:100%;height:120px;background:#0a1120;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font-family:ui-monospace,monospace;font-size:12px;margin-top:10px}
+  button{margin-top:8px;background:linear-gradient(135deg,var(--acc),var(--acc2));border:0;color:#05202a;font-weight:700;padding:9px 16px;border-radius:9px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">A</div>
+    <div>
+      <h1>Aweb Agent Receipt Explorer</h1>
+      <p class="sub">Governed Solana agent execution · verifiable hash-chained receipts</p>
+    </div>
+    <div id="chainBadge" class="badge">…</div>
+  </header>
+
+  <div class="meta" id="meta"></div>
+  <div id="cards"></div>
+
+  <div class="note" id="loadbox" style="display:none">
+    Could not auto-load the sample run. Paste a receipt-run JSON (the output of
+    <code>npm run -s fixture</code> / <code>generate-explorer-data.mjs</code>) and verify it in-browser:
+    <textarea id="paste" placeholder='{ "receipts": [ ... ] }'></textarea>
+    <button onclick="loadPasted()">Verify receipts</button>
+  </div>
+
+  <div class="note">
+    Chain verification runs <b>in your browser</b> via Web Crypto SHA-256 — it
+    recomputes each receipt hash and checks the <code>previous_hash</code> links.
+    Boundary: devnet · scoped session signer (no user custody) · simulate-by-default.
+    Mock signatures in this sample are clearly prefixed <code>MOCK…</code>.
+  </div>
+</div>
+
+<script src="sample-run.js" onerror="document.getElementById('loadbox').style.display='block'"></script>
+<script>
+const GENESIS = '0'.repeat(64);
+
+// Must match src/receipt.mjs stableStringify EXACTLY for hashes to agree.
+function stableStringify(value){
+  if(value===null||typeof value!=='object') return JSON.stringify(value);
+  if(Array.isArray(value)) return '['+value.map(stableStringify).join(',')+']';
+  const keys=Object.keys(value).sort();
+  return '{'+keys.map(k=>JSON.stringify(k)+':'+stableStringify(value[k])).join(',')+'}';
+}
+async function sha256hex(str){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function hashBody(r){
+  const {receipt_hash,previous_hash,...rest}=r;
+  return sha256hex(stableStringify(rest));
+}
+async function verifyChain(receipts){
+  let prev=GENESIS;const rows=[];
+  for(let i=0;i<receipts.length;i++){
+    const r=receipts[i];
+    const recomputed=await hashBody(r);
+    const linkOk=r.previous_hash===prev;
+    const hashOk=recomputed===r.receipt_hash;
+    rows.push({linkOk,hashOk});
+    prev=r.receipt_hash;
+  }
+  return rows;
+}
+
+function el(html){const d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild;}
+function short(h,n=14){return h?h.slice(0,n)+'…':'—';}
+
+async function render(run){
+  const receipts=run.receipts||[];
+  const rows=await verifyChain(receipts);
+  const allOk=rows.every(r=>r.linkOk&&r.hashOk);
+
+  const badge=document.getElementById('chainBadge');
+  badge.className='badge '+(allOk?'ok':'fail');
+  badge.innerHTML='<span class="dot"></span>'+(allOk?'Chain verified':'Chain broken');
+
+  const broadcast=receipts.find(r=>r.evidence?.solana_context?.transaction_signature);
+  const sc=broadcast?.evidence?.solana_context;
+  document.getElementById('meta').innerHTML=
+    `<span><b>${receipts.length}</b> receipts</span>`+
+    `<span>network <b>${sc?.cluster||'devnet'}</b></span>`+
+    `<span>instructions <b>${(sc?.instruction_classes||[]).join(' + ')||'—'}</b></span>`+
+    (sc?.compute_units?`<span>compute <b>${sc.compute_units}</b></span>`:'');
+
+  const cards=document.getElementById('cards');cards.innerHTML='';
+  receipts.forEach((r,i)=>{
+    const v=rows[i];const sc=r.evidence?.solana_context||{};
+    const sig=sc.transaction_signature;
+    const card=el(`<div class="card">
+      <div class="row">
+        <span class="step">${i+1}. ${r.step||r.scope}</span>
+        <span class="pill s-${r.execution?.status}">${r.execution?.status||'—'}</span>
+        <span class="pill" style="color:var(--dim)">${r.authority?.mode||''}</span>
+      </div>
+      <div class="summary">${r.evidence?.summary||''}</div>
+      <div class="kv">
+        <div class="k">risk class</div><div class="v">${r.capability?.risk_class||'—'}</div>
+        <div class="k">policy decision</div><div class="v">${r.policy_decision||'—'}</div>
+        <div class="k">approval</div><div class="v">${r.approval?.state||'n/a'}${r.approval?.approved_by?(' · '+r.approval.approved_by):''}</div>
+        ${sig?`<div class="k">signature</div><div class="v">${short(sig,28)}</div>`:''}
+        ${sc.slot?`<div class="k">slot</div><div class="v">${sc.slot}</div>`:''}
+        ${sc.explorer_url?`<div class="k">explorer</div><div class="v"><a href="${sc.explorer_url}" target="_blank" rel="noopener">view on Solana Explorer ↗</a></div>`:''}
+      </div>
+      <div class="chainlink">
+        <span class="hash">hash ${short(r.receipt_hash)}</span> ·
+        <span class="hash">prev ${short(r.previous_hash)}</span> ·
+        <span class="${v.hashOk?'verok':'verbad'}">${v.hashOk?'hash ✓':'hash ✗'}</span>
+        <span class="${v.linkOk?'verok':'verbad'}">${v.linkOk?'link ✓':'link ✗'}</span>
+      </div>
+    </div>`);
+    cards.appendChild(card);
+  });
+}
+
+function loadPasted(){
+  try{render(JSON.parse(document.getElementById('paste').value));document.getElementById('loadbox').style.display='none';}
+  catch(e){alert('Invalid JSON: '+e.message);}
+}
+
+// Auto-render if the JS fallback loaded; else try fetch; else show paste box.
+if(window.AWEB_SAMPLE_RUN){ render(window.AWEB_SAMPLE_RUN); }
+else{
+  fetch('./sample-run.json').then(r=>r.json()).then(render)
+    .catch(()=>{document.getElementById('loadbox').style.display='block';document.getElementById('chainBadge').textContent='load a run';});
+}
+</script>
+</body>
+</html>

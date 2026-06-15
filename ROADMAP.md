@@ -39,6 +39,18 @@ Status: current.
 - Keep private fields hidden or marked as redacted.
 - Include reviewer-friendly example pages for non-crypto workflows first.
 
+## v0.4.1 - Solana AgentKit (shipped)
+
+Status: shipped in `packages/solana-agent-kit/`.
+
+- Governed execution lifecycle for Solana: plan -> simulate -> human approval -> sign -> broadcast -> confirm, enforced as a state machine.
+- Risk classification, program allowlists, value caps, and denied-instruction guards (fail-closed).
+- HMAC approval tokens bound to the exact plan hash, with single-use nonce anti-replay and TTL.
+- SHA-256 hash-chained receipts with independent chain verification and redaction-by-design.
+- Hexagonal ports: a deterministic offline mock (zero install, zero network) and a documented `@solana/web3.js` live-devnet adapter.
+- Runnable demo (`examples/solana-launch-agent.mjs`), 16 governance invariant tests, and a zero-dependency in-browser receipt explorer (`explorer/`).
+- Boundary: simulate-by-default, scoped session signer (no user custody), devnet-first, mainnet gated behind explicit opt-in.
+
 ## v0.5 - Ecosystem Adapters
 
 Potential adapters depend on customer, grant, and community feedback. Candidate tracks include:

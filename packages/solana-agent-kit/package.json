@@ -1,0 +1,48 @@
+{
+  "name": "@aweb-labs/solana-agent-kit",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Governed AI-agent execution for Solana: plan -> simulate -> human approval -> sign -> broadcast, with hash-chained receipts. Simulate-by-default, no custody, devnet-first.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./src/index.mjs",
+      "default": "./src/index.mjs"
+    }
+  },
+  "scripts": {
+    "test": "node --test test/",
+    "demo": "node examples/solana-launch-agent.mjs",
+    "fixture": "node examples/generate-fixture.mjs"
+  },
+  "files": [
+    "src",
+    "examples",
+    "explorer",
+    "README.md",
+    "package.json"
+  ],
+  "peerDependencies": {
+    "@solana/web3.js": ">=1.90.0"
+  },
+  "peerDependenciesMeta": {
+    "@solana/web3.js": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "solana",
+    "ai-agents",
+    "agent-governance",
+    "wallet-aware",
+    "human-in-the-loop",
+    "agent-receipts",
+    "execution-evidence",
+    "devnet",
+    "mcp"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

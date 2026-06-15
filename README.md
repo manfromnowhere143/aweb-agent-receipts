@@ -46,6 +46,7 @@ Aweb's public primitive is:
 - `examples/mission-contracts/*.json` - Mission Contract examples.
 - `fixtures/*.example.json` - simulated Agent Receipt examples.
 - `packages/typescript/` - source-only TypeScript types and lightweight validation helpers.
+- `packages/solana-agent-kit/` - governed AI-agent execution for Solana: plan -> simulate -> human approval -> sign -> broadcast, with hash-chained receipts, a runnable offline demo, a zero-dependency receipt explorer, and a documented live-devnet path. Simulate-by-default, no custody, devnet-first.
 - `examples/the-graph-receipt-indexing-subgraph/` - minimal metadata-indexing skeleton for public receipt metadata.
 - `validate-examples.mjs` - local validator for receipt fixtures, Mission Contract examples, and required docs/examples.
 - `docs/open-core-boundary.md` - what is open here and what remains commercial/private.
