@@ -1,0 +1,97 @@
+{
+  "receipt_version": "aweb.agent_receipt.v0.1",
+  "receipt_id": "aweb-example-solana-governed-execution-001",
+  "example": true,
+  "created_at": "2026-06-15T00:00:00Z",
+  "scope": "solana_action_review",
+  "authority": {
+    "grant_id": "grant.solana.a7e53b12b3a0",
+    "mode": "execute_with_human_approval",
+    "authorized_by": "operator:daniel-wahnich",
+    "policy_profile": "devnet.needs_approval",
+    "allowed_actions": [
+      "simulate_transaction",
+      "request_human_approval"
+    ],
+    "denied_actions": [
+      "extract_private_key_or_seed",
+      "move_user_funds",
+      "front_run_or_sandwich",
+      "spam_rpc"
+    ]
+  },
+  "agent": {
+    "agent_id": "aweb.solana.governed_agent",
+    "model_class": "reasoning_agent",
+    "operator": "Aweb Labs"
+  },
+  "workflow": {
+    "workflow_id": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+    "intent": "Launch Aweb Demo: on-chain launch marker + small account seed",
+    "environment": "testnet"
+  },
+  "capability": {
+    "provider": "solana",
+    "tool": "governed_agent_kit",
+    "category": "program_action_evidence"
+  },
+  "execution": {
+    "status": "succeeded",
+    "started_at": "2025-10-09T08:53:31.000Z",
+    "finished_at": "2025-10-09T08:53:32.000Z",
+    "idempotency_key": "wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-.broadcast",
+    "cost": {
+      "amount": 0,
+      "unit": "USD",
+      "note": "devnet fees only; no real value moved"
+    }
+  },
+  "evidence": {
+    "summary": "Agent broadcast a governed memo+transfer transaction on solana-devnet after human approval; signature recorded.",
+    "solana_context": {
+      "cluster": "devnet",
+      "fee_payer": "SESSdevnetScopedSignerPublicKeyPlaceholder1",
+      "instruction_classes": [
+        "memo",
+        "transfer"
+      ],
+      "program_ids": [
+        "MemoSq4gq4mDmTBvV0EQ2sQ6yJpL9wXqL4n7z8aB3cD",
+        "11111111111111111111111111111111"
+      ],
+      "compute_units": 7400,
+      "transaction_signature": "MOCK688853dbd57ea93eb1696af40353348798ec0f34901e08a750523db56813285c",
+      "slot": 250000001,
+      "broadcast": true,
+      "explorer_url": "https://explorer.solana.com/tx/MOCK688853dbd57ea93eb1696af40353348798ec0f34901e08a750523db56813285c?cluster=devnet"
+    },
+    "artifacts": [
+      {
+        "type": "transaction_plan",
+        "ref": "plan://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+        "redacted": false
+      },
+      {
+        "type": "simulation_logs",
+        "ref": "sim://wf.solana.devnet.launch-aweb-demo-on-chain-launch-marker-",
+        "redacted": false
+      }
+    ]
+  },
+  "privacy": {
+    "redaction_policy": "no_keys_no_seeds_no_tokens_in_receipt",
+    "redacted_fields": [
+      "feePayer_private_key",
+      "session_signer_secret",
+      "rpc_auth"
+    ]
+  },
+  "review": {
+    "trust_state": "executed_with_approval",
+    "human_review_required": false,
+    "review_notes": [
+      "broadcast requires explicit, scoped, human-approved grant (simulate-by-default)"
+    ]
+  },
+  "_note": "Simulated, deterministic example produced by @aweb-labs/solana-agent-kit. Not live chain data. Signature/slot are mock values."
+}
